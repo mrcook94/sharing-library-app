@@ -1,5 +1,14 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { StyleSheet, StatusBar, SafeAreaView, Dimensions, PixelRatio, Platform } from 'react-native';
+import NoInternetScreen from 'screens/NoInternetScreen'
+
+export const HEADER_HEIGHT = 55
+export const { height, width } = Dimensions.get('screen')
+export const pixelRatio = PixelRatio.get()
+export const platfromOS = Platform.OS
+
+
+import R from 'res/R'
 
 class RootView extends Component {
     constructor(props) {
@@ -10,9 +19,14 @@ class RootView extends Component {
 
     render() {
         return (
-            <View style={styles.container}>
+            <SafeAreaView style={styles.container}>
+                <StatusBar
+                    backgroundColor={R.colors.primaryColor}
+                    barStyle="light-content"
+                />
                 {this.props.children}
-            </View>
+                <NoInternetScreen />
+            </SafeAreaView>
         );
     }
 }

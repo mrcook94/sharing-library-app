@@ -1,13 +1,5 @@
 const strings = {
-    onboarding: {
-        welcome: {
-            heading: 'Welcome',
-        },
-        welcome1: {
-            button: 'Login'
-        },
-    },
-
+    appName: 'Sharing Library',
     
 }
 export default strings;

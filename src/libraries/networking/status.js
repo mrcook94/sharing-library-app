@@ -15,4 +15,6 @@ export const Status = {
     NOT_ENTER_YOUR_CODE: 430,
     ERROR_MULTI_CODE: 435,
     GENERIC_ERROR: 1000,
+    OK: 1,
+    FAIL: 0,
 }

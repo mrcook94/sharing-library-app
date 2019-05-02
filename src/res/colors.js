@@ -1,7 +1,16 @@
 const colors = {
 
-    primaryColor: '#104a7a',
+    primaryColor: '#0083D8',
     secondaryColor: '#ff8d22',
+    primaryWhiteColor: 'white',
+    primaryBorderColor: '',
+    primaryGrayColor: '#eeeeee',
+    primaryBlurTextColor: '#B3B3B3',
+    primaryBorderColor: '#CCCCCC',
+    secondGrayColor: '#F6F6F6',
+    primaryBlackColor: '#444444',
+    primaryGradientStart: '#0081D7',
+    primaryGradientEnd: '#01B6EF',
 
 
     white100:'#FFFFFFFF',
