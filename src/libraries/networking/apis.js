@@ -5,7 +5,7 @@ import { API_ENDING } from './apiEnding'
 import Database from 'libraries/utils/database'
 
 var instance = axios.create({
-    baseURL: constants.BASE_URL_API,
+    baseURL: constants.BASE_API,
     timeout: constants.SERVER_TIMEOUT,
 })
 

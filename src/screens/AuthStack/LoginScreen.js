@@ -92,7 +92,7 @@ export default class LoginScreen extends Component {
             }
             apis.post(API_ENDING.LOGIN, data, apis.IS_AUTH.NO)
                 .then((res) => {
-                    if (res && res.code == Status.OK) {
+                    if (res && res.ok === Status.OK) {
                         Database.save(Database.KEY.TOKEN, res.data.token)
                         Database.setUserToken(res.data.token)
                         NavigationService.reset(APP_TAB)
@@ -100,7 +100,7 @@ export default class LoginScreen extends Component {
                         return
                     }
                     else {
-                        Toast.show(res.msgdefault)
+                        Toast.show(res.message)
                     }
                 })
                 .catch((err) => {

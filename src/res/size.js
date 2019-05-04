@@ -22,6 +22,9 @@ const textSize = {
 const iconSize = {
     iconTextInput: 16,
     logoSize: pixelRatio <= 2 ? 42 : 46,
+    tabBarIcon: pixelRatio <= 2 ? 16 : 18,
+    basic: pixelRatio <= 2 ? 18 : 20,
+    iconButton: pixelRatio <= 2 ? 22 : 24,
 }
 
 export default {

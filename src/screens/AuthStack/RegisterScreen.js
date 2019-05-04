@@ -100,25 +100,24 @@ export default class RegisterScreen extends Component {
 		if (validateName.validated) {
 			if (validatePhone.validated) {
 				let data = {
-					full_name: full_name,
+					name: full_name,
 					phone: phone_number,
 					password: password,
 				}
 				apis.post(API_ENDING.REGISTER, data, apis.IS_AUTH.NO)
 					.then((res) => {
-						if (res && res.code == Status.OK) {
+						if (res && res.ok === Status.OK) {
 							Database.save(Database.KEY.TOKEN, res.data.token)
 							Database.setUserToken(res.data.token)
 							NavigationService.reset(APP_TAB)
 							Toast.show('Đăng ký thành công')
-							console.log(res);
 						}
 						else {
-							Toast.show(res.msgdefault)
+							Toast.show(res.message)
 						}
 					})
 					.catch((err) => {
-						Toast.show(`Đăng ký thất bại. Lỗi ${err}`)
+						Toast.show('Đăng ký thất bại.')
 					})
 			} else {
 				Toast.show(validatePhone.message)

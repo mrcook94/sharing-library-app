@@ -2,40 +2,52 @@ import React, { Component } from 'react';
 import { View, Text, StyleSheet, TouchableWithoutFeedback } from 'react-native';
 import NavigationService from 'routers/NavigationService'
 import { AUTH_STACK, APP_TAB } from 'libraries/utils/screenNames'
-import Icon from 'react-native-vector-icons/FontAwesome5';
+import Database from 'libraries/utils/database'
+import LogoComponent from './custom_components/LogoComponent'
+import LinearGradient from 'react-native-linear-gradient'
+
+import R from 'res/R'
 
 class SplashScreen extends Component {
     constructor(props) {
         super(props);
-        this.state = {
-            isFocused: true
-        };
     }
 
     render() {
         return (
             <TouchableWithoutFeedback onPress={this.onStartingApp}>
-                <View style={styles.container}>
-                    <Text>Welcome to my Library</Text>
-                    <Text>Developed by TruongLe</Text>
-                    <Icon
-                        name={'comments'} solid
-                        size={30}
-                    />
-                </View>
+                <LinearGradient
+                    colors={[R.colors.primaryGradientEnd, R.colors.primaryColor, R.colors.blue900]}
+                    style={styles.linearGradient}
+                >
+                    <View style={styles.container} >
+                        <LogoComponent />
+                        <Text style={styles.introTextStyle}>{R.strings.intro}</Text>
+                        <Text style={styles.copyRightTextStyle}>{R.strings.copy_right}</Text>
+                    </View>
+                </LinearGradient>
             </TouchableWithoutFeedback>
         );
     }
 
     componentDidMount = () => {
-        setTimeout(this.onStartingApp, 3000)
+        this.loadingTimeout = setTimeout(() => this.onStartingApp(), 3000);
     };
 
-    onStartingApp = () => {
-        if (this.state.isFocused) {
-            this.setState({
-                isFocused: false
-            }, NavigationService.reset(AUTH_STACK))
+    onStartingApp = async () => {
+        const userToken = await Database.get(Database.KEY.TOKEN)
+        if (userToken) {
+            Database.setUserToken(userToken)
+            NavigationService.reset(APP_TAB)
+        }
+        else {
+            NavigationService.reset(AUTH_STACK)
+        }
+    }
+
+    componentWillUnmount() {
+        if (this.loadingTimeout) {
+            clearTimeout(this.loadingTimeout)
         }
     }
 }
@@ -43,8 +55,22 @@ class SplashScreen extends Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        justifyContent: 'center',
+        justifyContent: 'space-between',
         alignItems: 'center',
+    },
+    linearGradient: {
+        flex: 1,
+        padding: 20,
+    },
+    introTextStyle: {
+        fontSize: R.size.textSize.subTitle,
+        color: R.colors.primaryWhiteColor,
+        textAlign: 'center',
+        marginBottom: 40,
+    },
+    copyRightTextStyle: {
+        fontSize: R.size.textSize.content,
+        color: R.colors.primaryWhiteColor,
     }
 });
 

@@ -18,6 +18,10 @@ function getUserToken() {
     return USER_TOKEN
 }
 
+function removeItem(key) {
+    AsyncStorage.removeItem(key)
+}
+
 const KEY = {
     TOKEN: 'key_token',
 }
@@ -28,4 +32,5 @@ export default {
     KEY,
     setUserToken,
     getUserToken,
+    removeItem,
 }

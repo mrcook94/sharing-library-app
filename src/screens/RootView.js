@@ -25,7 +25,7 @@ class RootView extends Component {
                     barStyle="light-content"
                 />
                 {this.props.children}
-                <NoInternetScreen />
+                {/* <NoInternetScreen /> */}
             </SafeAreaView>
         );
     }

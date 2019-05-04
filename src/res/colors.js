@@ -11,6 +11,7 @@ const colors = {
     primaryBlackColor: '#444444',
     primaryGradientStart: '#0081D7',
     primaryGradientEnd: '#01B6EF',
+    backgroundColorBlue: '#01B6EF',
 
 
     white100:'#FFFFFFFF',
