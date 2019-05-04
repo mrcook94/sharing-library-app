@@ -14,6 +14,8 @@ import { BasicTextButton, LinearGradientButton } from 'libraries/components/Butt
 import { pixelRatio } from 'screens/RootView'
 import DismissKeyboard from 'libraries/components/DismissKeyboard'
 import LogoComponent from './auth_components/LogoComponent'
+import { hideLoading, showLoading } from 'libraries/components/Loading/LoadingModal'
+
 
 export default class RegisterScreen extends Component {
 	constructor(props) {
@@ -91,14 +93,15 @@ export default class RegisterScreen extends Component {
 			return
 		}
 
-		if (password.length == 0) {
-			Toast.show('Mời bạn nhập mật khẩu')
+		if (password.length < 6) {
+			Toast.show('Mật khẩu cần ít nhất 6 ký tự')
 			return
 		}
 		const validateName = Validate.Regex.regexName(full_name)
 		const validatePhone = Validate.Regex.regexPhone(phone_number)
 		if (validateName.validated) {
 			if (validatePhone.validated) {
+				showLoading()
 				let data = {
 					name: full_name,
 					phone: phone_number,
@@ -110,13 +113,16 @@ export default class RegisterScreen extends Component {
 							Database.save(Database.KEY.TOKEN, res.data.token)
 							Database.setUserToken(res.data.token)
 							NavigationService.reset(APP_TAB)
+							hideLoading()
 							Toast.show('Đăng ký thành công')
 						}
 						else {
+							hideLoading()
 							Toast.show(res.message)
 						}
 					})
 					.catch((err) => {
+						hideLoading()
 						Toast.show('Đăng ký thất bại.')
 					})
 			} else {

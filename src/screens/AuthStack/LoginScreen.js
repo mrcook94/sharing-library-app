@@ -13,6 +13,7 @@ import CustomTextInput from './auth_components/CustomTextInput'
 import { BasicTextButton, LinearGradientButton } from 'libraries/components/ButtonTemplate/BasicButton'
 import { pixelRatio } from 'screens/RootView'
 import LogoComponent from './auth_components/LogoComponent'
+import { hideLoading, showLoading } from 'libraries/components/Loading/LoadingModal'
 
 export default class LoginScreen extends Component {
     constructor(props) {
@@ -24,46 +25,46 @@ export default class LoginScreen extends Component {
     }
     render() {
         return (
-                <ScrollView showsVerticalScrollIndicator={false}>
-                    <View style={styles.container}>
-                        <LogoComponent/>
-                        <View style={styles.groupInputStyle}>
-                            <CustomTextInput
-                                placeholder={'Số điện thoại'}
-                                iconName={'mobile-alt'}
-                                onChangeText={this.onChangeText('phone_number')}
-                                keyboardType={'phone-pad'}
-                                maxLength={10}
-                            />
+            <ScrollView showsVerticalScrollIndicator={false}>
+                <View style={styles.container}>
+                    <LogoComponent />
+                    <View style={styles.groupInputStyle}>
+                        <CustomTextInput
+                            placeholder={'Số điện thoại'}
+                            iconName={'mobile-alt'}
+                            onChangeText={this.onChangeText('phone_number')}
+                            keyboardType={'phone-pad'}
+                            maxLength={10}
+                        />
 
-                            <CustomTextInput
-                                placeholder={'Mật khẩu'}
-                                iconName='lock'
-                                onChangeText={this.onChangeText('password')}
-                                secureTextEntry={true}
-                            />
-                        </View>
-
-                        <LinearGradientButton
-                            gradientColors={[R.colors.primaryGradientStart, R.colors.primaryGradientEnd]}
-                            linearGradientButtonStyle={styles.buttonStyle}
-                            onPress={this.onClickLogin}
-                            gradientStart={{ x: 0.0, y: 1.0 }} gradientEnd={{ x: 1.0, y: 1.0 }}
-                        >
-                            <Text style={styles.buttonText}>ĐĂNG NHẬP</Text>
-                        </LinearGradientButton>
-
-                        <View style={styles.otherSituation}>
-                            <Text style={styles.defaultText}>Bạn chưa có tài khoản?</Text>
-                            <BasicTextButton
-                                buttonStyle={styles.defaulButtonStyle}
-                                text='Đăng ký.'
-                                textStyle={[styles.defaultText, styles.otherStyleText]}
-                                onPress={this.onClickRegisterNow}
-                            />
-                        </View>
+                        <CustomTextInput
+                            placeholder={'Mật khẩu'}
+                            iconName='lock'
+                            onChangeText={this.onChangeText('password')}
+                            secureTextEntry={true}
+                        />
                     </View>
-                </ScrollView>
+
+                    <LinearGradientButton
+                        gradientColors={[R.colors.primaryGradientStart, R.colors.primaryGradientEnd]}
+                        linearGradientButtonStyle={styles.buttonStyle}
+                        onPress={this.onClickLogin}
+                        gradientStart={{ x: 0.0, y: 1.0 }} gradientEnd={{ x: 1.0, y: 1.0 }}
+                    >
+                        <Text style={styles.buttonText}>ĐĂNG NHẬP</Text>
+                    </LinearGradientButton>
+
+                    <View style={styles.otherSituation}>
+                        <Text style={styles.defaultText}>Bạn chưa có tài khoản?</Text>
+                        <BasicTextButton
+                            buttonStyle={styles.defaulButtonStyle}
+                            text='Đăng ký.'
+                            textStyle={[styles.defaultText, styles.otherStyleText]}
+                            onPress={this.onClickRegisterNow}
+                        />
+                    </View>
+                </View>
+            </ScrollView>
         )
     }
 
@@ -79,13 +80,14 @@ export default class LoginScreen extends Component {
             return
         }
 
-        if (password.length == 0) {
-            Toast.show('Mời bạn nhập mật khẩu')
+        if (password.length < 6) {
+            Toast.show('Mật khẩu cần ít nhất 6 ký tự')
             return
         }
 
         const validatePhone = Validate.Regex.regexPhone(phone_number)
         if (validatePhone.validated) {
+            showLoading()
             const data = {
                 phone: phone_number,
                 password: password
@@ -96,14 +98,17 @@ export default class LoginScreen extends Component {
                         Database.save(Database.KEY.TOKEN, res.data.token)
                         Database.setUserToken(res.data.token)
                         NavigationService.reset(APP_TAB)
+                        hideLoading()
                         Toast.show('Đăng nhập thành công')
                         return
                     }
                     else {
+                        hideLoading()
                         Toast.show(res.message)
                     }
                 })
                 .catch((err) => {
+                    hideLoading()
                     Toast.show('Đăng nhập thất bại')
                 })
         } else {
@@ -152,8 +157,8 @@ const styles = StyleSheet.create({
         alignItems: 'center'
     },
     otherStyleText: {
-		color: R.colors.primaryColor,
-		marginLeft: 5,
-		fontWeight: '500'
-	}
+        color: R.colors.primaryColor,
+        marginLeft: 5,
+        fontWeight: '500'
+    }
 })
