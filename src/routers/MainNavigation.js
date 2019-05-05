@@ -4,11 +4,12 @@ import LoginScreen from 'screens/AuthStack/LoginScreen'
 import RegisterScreen from 'screens/AuthStack/RegisterScreen'
 import HomeScreen from 'screens/TabHome/index'
 import ProfileScreen from 'screens/TabProfile/index'
-import Notification from 'screens/TabNotification/index'
+import NotificationScreen from 'screens/TabNotification/index'
+import DetailProfileScreen from 'screens/TabProfile/DetailProfileScreen'
 
 import * as screenNames from 'libraries/utils/screenNames'
 import R from 'res/R'
-import NotificationScreen from 'screens/TabNotification/index';
+
 
 const authStack = createStackNavigator({
     [screenNames.LOGIN_SCREEN]: LoginScreen,
@@ -39,6 +40,7 @@ const mainStack = createStackNavigator({
     [screenNames.SPLASH_SCREEN]: { screen: SplashScreen },
     [screenNames.AUTH_STACK]: authStack,
     [screenNames.APP_TAB]: MainTab,
+    [screenNames.DETAIL_PROFILE_SCREEN]: DetailProfileScreen,
 },
     {
         headerMode: 'none'

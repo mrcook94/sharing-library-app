@@ -72,10 +72,6 @@ const styles = StyleSheet.create({
         margin: 5,
         padding: 5,
     },
-    headerTitle: {
-        height: '100%',
-        backgroundColor: 'red'
-    },
     titleContentStyle: {
         color: 'white',
         fontSize: R.size.textSize.header,

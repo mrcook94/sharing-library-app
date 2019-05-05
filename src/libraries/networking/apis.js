@@ -82,10 +82,28 @@ function postWithFormData(url, data, isAuth) {
     })
 }
 
+function putWithFormData(url, data, isAuth) {
+    let headers = null
+    if (isAuth) {
+        headers = {
+            Authorization: Database.getUserToken(),
+            'Content-Type': 'multipart/form-data',
+        }
+    }
+    return instance.put(url, data, {
+        headers
+    }).then(response => {
+        return response.data
+    }).catch(error => {
+        return error;
+    })
+}
+
 export default apis = {
     fetch,
     post,
     postWithFormData,
+    putWithFormData,
     IS_AUTH,
     put,
 }

@@ -1,4 +1,0 @@
-export const LOGGING_IN = 'LOGGING_IN';
-export const LOGGING_IN_SUCCESS = 'LOGGING_IN_SUCCESS';
-export const LOGGING_IN_FAILED = 'LOGGING_IN_FAILED';
-

@@ -12,6 +12,9 @@ export const HOME_SCREEN = 'HomeScreen'
 export const PROFILE_SCREEN = 'ProfileScreen'
 export const NOTIFICATION_SCREEN = 'NotificationScreen'
 
-//App Stack screen
+//Book
 export const BOOK_CATEGORY_SCREEN = 'BookCategoryScreen'
 export const DETAIL_BOOK_SCREEN = 'DetailBookScreen'
+
+//Profile
+export const DETAIL_PROFILE_SCREEN = 'DetailProfileScreen'
