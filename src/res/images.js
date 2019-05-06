@@ -3,6 +3,8 @@ const images = {
     default_image: {
         img_no_internet: require('res/images/default_image/bg_cannot_connect.png'),
         img_avatar: require('res/images/default_image/default_avatar.png'),
+        img_no_request: require('res/images/default_image/img_no_request.png'),
+        img_none_data: require('res/images/default_image/img_none_data.png'),
     },
     icon_app: {
         ic_back: require('res/images/icon/ic_back.png'),

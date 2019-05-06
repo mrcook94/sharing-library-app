@@ -6,6 +6,7 @@ import HomeScreen from 'screens/TabHome/index'
 import ProfileScreen from 'screens/TabProfile/index'
 import NotificationScreen from 'screens/TabNotification/index'
 import DetailProfileScreen from 'screens/TabProfile/DetailProfileScreen'
+import CategoryScreen from 'screens/CategoryScreen/CategoryScreen'
 
 import * as screenNames from 'libraries/utils/screenNames'
 import R from 'res/R'
@@ -41,6 +42,7 @@ const mainStack = createStackNavigator({
     [screenNames.AUTH_STACK]: authStack,
     [screenNames.APP_TAB]: MainTab,
     [screenNames.DETAIL_PROFILE_SCREEN]: DetailProfileScreen,
+    [screenNames.CATEGORY_SCREEN]: CategoryScreen,
 },
     {
         headerMode: 'none'

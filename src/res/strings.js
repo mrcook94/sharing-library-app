@@ -18,5 +18,12 @@ const strings = {
         changePassword: '5',
         logout: '6',
     },
+    homeTitle: {
+        category: 'Danh mục sách',
+        home_book: 'Tất cả sách',
+    },
+    noDataContent: {
+        book: 'Hiện chưa có sách này'
+    }
 }
 export default strings;

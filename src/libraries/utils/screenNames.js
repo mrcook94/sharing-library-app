@@ -13,8 +13,9 @@ export const PROFILE_SCREEN = 'ProfileScreen'
 export const NOTIFICATION_SCREEN = 'NotificationScreen'
 
 //Book
-export const BOOK_CATEGORY_SCREEN = 'BookCategoryScreen'
+export const BOOK_BY_CATEGORY_SCREEN = 'BookByCategoryScreen'
 export const DETAIL_BOOK_SCREEN = 'DetailBookScreen'
+export const CATEGORY_SCREEN = 'CategoryScreen' 
 
 //Profile
 export const DETAIL_PROFILE_SCREEN = 'DetailProfileScreen'
