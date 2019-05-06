@@ -3,7 +3,6 @@ const colors = {
     primaryColor: '#0083D8',
     secondaryColor: '#ff8d22',
     primaryWhiteColor: 'white',
-    primaryBorderColor: '',
     primaryGrayColor: '#eeeeee',
     primaryBlurTextColor: '#B3B3B3',
     primaryBorderColor: '#CCCCCC',

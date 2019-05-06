@@ -116,7 +116,6 @@ const styles = StyleSheet.create({
     profileContainer: {
         alignItems: 'center',
         marginHorizontal: 15,
-        height: 400,
     },
     profileView: {
         backgroundColor: R.colors.primaryWhiteColor,

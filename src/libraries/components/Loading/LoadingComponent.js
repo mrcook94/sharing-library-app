@@ -9,7 +9,7 @@ class LoadingComponent extends Component {
     render() {
         const loadingSize = pixelRatio <= 2 ? 'small' : 'large'
         return (
-            <View style={styles.container}>
+            <View style={[styles.container, this.props.loadingStyle]}>
                 <ActivityIndicator size={loadingSize} color={R.colors.primaryColor} />
             </View>
         );
