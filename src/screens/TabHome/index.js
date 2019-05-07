@@ -31,6 +31,7 @@ class HomeScreen extends Component {
 						<GroupBookHome />
 					</View>
 				</ScrollView>
+
 			</View>
 		)
 	}
@@ -49,5 +50,5 @@ const styles = StyleSheet.create({
 	container: {
 		flex: 1,
 		backgroundColor: R.colors.primaryGrayColor,
-	}
+	},
 })

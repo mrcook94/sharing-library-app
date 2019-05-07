@@ -9,6 +9,8 @@ import apis from 'libraries/networking/apis'
 import { API_ENDING } from 'libraries/networking/apiEnding'
 import { Status } from 'libraries/networking/status'
 import { width, height } from 'screens/RootView'
+import NavigationService from 'routers/NavigationService'
+import { BOOK_BY_CATEGORY_SCREEN } from 'libraries/utils/screenNames'
 
 import R from 'res/R'
 
@@ -20,7 +22,10 @@ class CategoryScreen extends Component {
 
     renderCategoryItem = ({ item }) => {
         return (
-            <TouchableOpacity style={styles.categoryItem}>
+            <TouchableOpacity
+                style={styles.categoryItem}
+                onPress={this.onPressCategoryItem({item})}
+            >
                 <Text style={styles.categoryTextStyle}>{item.category_name}</Text>
                 <BasicIcon
                     iconSource={R.images.icon_app.ic_arrow_right}
@@ -90,6 +95,9 @@ class CategoryScreen extends Component {
             })
     }
 
+    onPressCategoryItem = ({item}) => ()=> {
+        NavigationService.navigate(BOOK_BY_CATEGORY_SCREEN, {data: item})
+    }
 
     keyExtractor = (item, index) => (item.id || item.key || index).toString()
 }

@@ -4,4 +4,5 @@ export const API_ENDING = {
     PROFILE: '/profile',
     CATEGORY: './category',
     BOOK: '/books',
+    REQUEST: '/requests',
 }

@@ -27,7 +27,12 @@ const iconSize = {
     iconButton: pixelRatio <= 2 ? 22 : 24,
 }
 
+const buttonSize = {
+    basic: pixelRatio <= 2 ? 40 : 45,
+}
+
 export default {
     textSize,
     iconSize,
+    buttonSize,
 }

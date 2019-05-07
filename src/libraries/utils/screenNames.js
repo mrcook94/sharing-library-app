@@ -16,6 +16,11 @@ export const NOTIFICATION_SCREEN = 'NotificationScreen'
 export const BOOK_BY_CATEGORY_SCREEN = 'BookByCategoryScreen'
 export const DETAIL_BOOK_SCREEN = 'DetailBookScreen'
 export const CATEGORY_SCREEN = 'CategoryScreen' 
+export const ALL_BOOK_SCREEN = 'AllBookScreen'
 
 //Profile
 export const DETAIL_PROFILE_SCREEN = 'DetailProfileScreen'
+
+//Request
+export const ADD_BOOK_SCREEN = 'AddBookScreen'
+export const QR_CODE_SCREEN = 'QRCodeScreen'

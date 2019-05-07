@@ -1,30 +1,32 @@
 import React, { Component } from 'react'
 import { Text, View, StyleSheet, FlatList, TouchableOpacity } from 'react-native'
-import FastImage from 'react-native-fast-image'
+import DefaultHeader from 'libraries/components/HeaderTemplate/DefaultHeader'
 import apis from 'libraries/networking/apis'
 import { API_ENDING } from 'libraries/networking/apiEnding'
 import { Status } from 'libraries/networking/status'
 import LoadingComponent from 'libraries/components/Loading/LoadingComponent'
-import NavigationService from 'routers/NavigationService'
-import { DETAIL_BOOK_SCREEN, ALL_BOOK_SCREEN } from 'libraries/utils/screenNames'
-import { URL_IMAGE } from 'libraries/utils/imageUrl'
 import ListNoDataComponent from 'libraries/components/ListNoDataComponent'
-import { BasicTextButton } from 'libraries/components/ButtonTemplate/BasicButton'
-import { width } from 'screens/RootView'
+import FastImage from 'react-native-fast-image'
+import { URL_IMAGE } from 'libraries/utils/imageUrl'
 
 import R from 'res/R'
+import NavigationService from 'routers/NavigationService';
+import { DETAIL_BOOK_SCREEN } from 'libraries/utils/screenNames'
 
-class GroupBookHome extends Component {
+class AllBookScreen extends Component {
     state = {
+        listBookData: [],
         isLoading: true,
-        listHomeBook: []
+        isLoadMore: false,
+        page: 1,
+        per_page: 6,
     }
 
-    renderListHomeBook = ({ item }) => {
+    renderListBook = ({ item }) => {
         return (
             <TouchableOpacity
                 style={styles.bookItemStyle}
-                onPress={this.onPressDetailBook({ item })}
+                onPress={this.onPressDetailBook({item})}
             >
                 <FastImage
                     source={{ uri: URL_IMAGE.urlBookImage(item.front_image) }}
@@ -55,78 +57,116 @@ class GroupBookHome extends Component {
         )
     }
 
+    renderFooterComponent = () => {
+        return (
+            this.state.isLoadMore && <LoadingComponent />
+        )
+    }
+
     render() {
         return (
             <View style={styles.container}>
-                <View style={styles.titleViewStyle}>
-                    <Text style={styles.textTitle}>{R.strings.homeTitle.home_book}</Text>
+                <DefaultHeader
+                    headerTitle={R.strings.headerTitle.book_all}
+                    iconBack={true}
+                />
+                <View style={{ flex: 1, padding: 5, }}>
                     {this.state.isLoading ? <LoadingComponent /> : (
                         <FlatList
-                            data={this.state.listHomeBook}
-                            renderItem={this.renderListHomeBook}
+                            data={this.state.listBookData}
+                            extraData={this.state}
+                            renderItem={this.renderListBook}
                             keyExtractor={this.keyExtractor}
                             numColumns={2}
                             ListEmptyComponent={this.renderNoData}
-                            scrollEnabled={false}
+                            style={styles.flatListStyle}
+                            ListFooterComponent={this.renderFooterComponent}
+                            refreshing={this.state.isLoading}
+                            onRefresh={this.onRefreshListBook}
+                            onEndReachedThreshold={0.2}
+                            onEndReached={this.onLoadMoreBook}
                         />
                     )}
                 </View>
-                {!!this.state.listHomeBook.length && (
-                    <BasicTextButton
-                        buttonStyle={styles.buttonStyle}
-                        text='Xem thêm'
-                        textStyle={styles.textButtonStyle}
-                        onPress={this.onPressSeeMoreBook}
-                    />
-                )}
             </View>
         )
     }
 
-    keyExtractor = (item, index) => (item.id || item.key || index).toString()
-
     componentDidMount() {
-        apis.fetch(API_ENDING.BOOK, null, apis.IS_AUTH.YES)
+        this.onRefreshListBook()
+    }
+
+    onRefreshListBook = () => {
+        this.setState({
+            page: 1,
+            listBookData: [],
+            isLoading: true,
+        }, () => this.loadListBook())
+    }
+
+    onLoadMoreBook = () => {
+        const { page, per_page, listBookData } = this.state
+        if (listBookData.length !== 0 || page * per_page > listBookData.length) {
+            return
+        }
+        this.setState(prev => {
+            return {
+                isLoadMore: true,
+                page: prev.page + 1
+            }
+        }, () => this.loadListBook())
+    }
+
+    loadListBook = () => {
+        const params = {
+            page: this.state.page,
+            per_page: this.state.per_page,
+        }
+        apis.fetch(API_ENDING.BOOK, params, apis.IS_AUTH.YES)
             .then(res => {
                 if (res && res.ok === Status.OK) {
-                    this.setState({
-                        listHomeBook: res.data,
-                        isLoading: false
+                    this.setState(prev => {
+                        return {
+                            listBookData: [...prev.listBookData, ...res.data],
+                            isLoadMore: false,
+                            isLoading: false,
+                        }
                     })
-                    console.log(res, 'ACBCBC')
                 } else {
                     this.setState({
-                        isLoading: false
+                        isLoadMore: false,
+                        isLoading: false,
                     })
-                    console.log(res, 'Looix')
+                    console.log(res, 'CANT GET BOOK')
                 }
             })
             .catch(err => {
                 this.setState({
-                    isLoading: false
+                    isLoadMore: false,
+                    isLoading: false,
                 })
                 console.log(err, 'ERROR')
             })
     }
 
-    onPressDetailBook = ({ item }) => () => {
-        NavigationService.navigate(DETAIL_BOOK_SCREEN, { book_data: item })
+    onPressDetailBook = ({item}) => () => {
+        NavigationService.navigate(DETAIL_BOOK_SCREEN, {book_data: item})
     }
 
-    onPressSeeMoreBook = () => {
-        NavigationService.navigate(ALL_BOOK_SCREEN)
-    }
+    keyExtractor = (item, index) => (item.id || item.key || index).toString()
 }
 
-export default GroupBookHome
+export default AllBookScreen
 
 const styles = StyleSheet.create({
     container: {
         flex: 1,
+        backgroundColor: R.colors.primaryGrayColor,
     },
     titleViewStyle: {
-        flex: 1,
-        padding: 10,
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center'
     },
     textTitle: {
         fontSize: R.size.textSize.title,
@@ -139,7 +179,7 @@ const styles = StyleSheet.create({
         justifyContent: 'flex-start',
         backgroundColor: R.colors.primaryWhiteColor,
         marginTop: 10,
-        elevation: 1,
+        elevation: 2,
         paddingTop: 10,
     },
     bookImageStyle: {
@@ -160,16 +200,4 @@ const styles = StyleSheet.create({
         color: R.colors.primaryBlurTextColor,
         marginTop: 5,
     },
-    buttonStyle: {
-        width,
-        height: R.size.buttonSize.basic,
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: R.colors.primaryColor,
-    },
-    textButtonStyle: {
-        fontSize: R.size.textSize.title,
-        fontWeight: '500',
-        color: R.colors.primaryWhiteColor
-    }
 })

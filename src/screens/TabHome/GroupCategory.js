@@ -18,7 +18,10 @@ class GroupCategory extends Component {
 
     renderListCategory = ({ item }) => {
         return (
-            <TouchableOpacity style={styles.categoryItemStyle}>
+            <TouchableOpacity
+                style={styles.categoryItemStyle}
+                onPress={this.onPressCategoryItem({ item })}
+            >
                 <Text style={styles.textCategory}>{item.category_name}</Text>
             </TouchableOpacity>
         )
@@ -76,6 +79,10 @@ class GroupCategory extends Component {
 
     onClickSeeMore = () => {
         NavigationService.navigate(CATEGORY_SCREEN)
+    }
+
+    onPressCategoryItem = ({ item }) => () => {
+        NavigationService.navigate(BOOK_BY_CATEGORY_SCREEN, { data: item })
     }
 
     keyExtractor = (item, index) => (item.id || item.key || index).toString()
