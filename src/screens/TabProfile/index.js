@@ -4,7 +4,7 @@ import R from 'res/R'
 import ProfileHeader from './custom_components/ProfileHeader'
 import { HEADER_HEIGHT } from 'libraries/components/HeaderTemplate/DefaultHeader'
 import Avatar from './custom_components/Avatar'
-import { AUTH_STACK, DETAIL_PROFILE_SCREEN } from 'libraries/utils/screenNames'
+import { AUTH_STACK, DETAIL_PROFILE_SCREEN, REQUEST_HISTORY_SCREEN } from 'libraries/utils/screenNames'
 import NavigationService from 'routers/NavigationService'
 import Database from 'libraries/utils/database'
 import Icon from 'react-native-vector-icons/FontAwesome5'
@@ -83,6 +83,7 @@ class ProfileScreen extends Component {
                 NavigationService.navigate(DETAIL_PROFILE_SCREEN)
                 break;
             case R.strings.profileItemID.requestHistory:
+                NavigationService.navigate(REQUEST_HISTORY_SCREEN)
                 break;
             case R.strings.profileItemID.borrowingBooks:
                 break;

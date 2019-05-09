@@ -12,6 +12,7 @@ import DetailBookScreen from 'screens/Book/DetailBookScreen'
 import AllBookScreen from 'screens/Book/AllBookScreen'
 import AddBookScreen from 'screens/AddBookScreen'
 import QRCodeScreen from 'screens/QRCode'
+import RequestHistoryScreen from 'screens/RequestHitory'
 
 import * as screenNames from 'libraries/utils/screenNames'
 import R from 'res/R'
@@ -53,6 +54,7 @@ const mainStack = createStackNavigator({
     [screenNames.ALL_BOOK_SCREEN]: AllBookScreen,
     [screenNames.ADD_BOOK_SCREEN]: AddBookScreen,
     [screenNames.QR_CODE_SCREEN]: QRCodeScreen,
+    [screenNames.REQUEST_HISTORY_SCREEN]: RequestHistoryScreen,
 },
     {
         headerMode: 'none'

@@ -22,5 +22,8 @@ export const ALL_BOOK_SCREEN = 'AllBookScreen'
 export const DETAIL_PROFILE_SCREEN = 'DetailProfileScreen'
 
 //Request
+export const REQUEST_HISTORY_SCREEN = 'RequestHistoryScreen'
 export const ADD_BOOK_SCREEN = 'AddBookScreen'
 export const QR_CODE_SCREEN = 'QRCodeScreen'
+export const REQUEST_BORROW_BOOK = 'RequestBorrowBookScreen'
+export const REQUEST_CONTRIBUTE_BOOK = 'RequestContributeBookScreen'

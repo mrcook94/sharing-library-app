@@ -4,6 +4,7 @@ import React, { Component } from 'react'
 import { Text, View, StyleSheet } from 'react-native'
 import DefaultHeader from 'libraries/components/HeaderTemplate/DefaultHeader'
 import QRCode from 'react-native-qrcode';
+import { width } from 'screens/RootView'
 
 import R from 'res/R'
 
@@ -11,17 +12,20 @@ export default class QRCodeScreen extends Component {
     render() {
         const data = this.props.navigation.getParam('data', '')
         return (
-            <View style={styles.container}>
+            <View style={styles.container} removeClippedSubviews={true}>
                 <DefaultHeader
                     headerTitle={R.strings.headerTitle.qr_code}
                     iconBack={true}
                 />
-                <View style={styles.qrCodeView}>
-                    <Text style={styles.textStyle}>Quét mã này để xác nhận yêu cầu</Text>
+                <Text style={styles.textStyle}>Quét mã này để xác nhận yêu cầu</Text>
+                <View
+                    style={styles.qrCodeView}
+                    overflow={'hidden'}
+                >
                     <QRCode
-                        value={'test_qr'}
+                        value={data.book_id}
                         size={200}
-                        bgColor='purple'
+                        bgColor={R.colors.primaryBlackColor}
                         fgColor='white'
                     />
                 </View>
@@ -38,11 +42,10 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: 'red'
     },
     textStyle: {
-        fontSize: R.size.textSize.content,
+        fontSize: R.size.textSize.subTitle,
         textAlign: 'center',
-        marginBottom: 20,
+        marginTop: width / 3,
     }
 })

@@ -61,7 +61,6 @@ export default class DetailBookScreen extends Component {
         const book_data = this.props.navigation.getParam('book_data', '')
         if (book_data.status !== constants.BOOK_STATUS.available) {
             Toast.show('Không thể mượn sách này')
-            NavigationService.navigate(QR_CODE_SCREEN)
             return;
         }
 

@@ -14,7 +14,14 @@ const constants = {
     REQUEST_TYPE: {
         BORROW: 1,
         CONTRIBUTE: 2,
-    }
+    },
+
+    REQUEST_STATUS: {
+        PENDING: 1,
+        ACCEPTED: 2,
+        REJECTED: 3,
+        FINISHED: 4,
+    },
 }
 
 export default constants;

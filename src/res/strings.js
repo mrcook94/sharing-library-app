@@ -11,6 +11,11 @@ const strings = {
         book_category: 'Danh mục sách',
         book_all: 'Tất cả sách',
         qr_code: 'Quét mã QR',
+        request_tab: {
+            main_tab: 'Lịch sử yêu cầu',
+            borrow: 'Mượn sách',
+            contribute: 'Đóng góp sách'
+        }
     },
 
     profileItemID: {
@@ -26,7 +31,8 @@ const strings = {
         home_book: 'Tất cả sách',
     },
     noDataContent: {
-        book: 'Hiện chưa có sách này'
+        book: 'Hiện chưa có sách này',
+        request: 'Chưa có yêu cầu nào',
     },
     book_status: {
         available: 'Có thể mượn',
