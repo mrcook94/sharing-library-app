@@ -10,6 +10,9 @@ import constants from 'libraries/utils/constants'
 import { width, platfromOS } from 'screens/RootView'
 import { BasicTextButton } from 'libraries/components/ButtonTemplate/BasicButton'
 import Toast from 'react-native-simple-toast'
+import { showLoading, hideLoading } from 'libraries/components/Loading/LoadingModal'
+import NavigationService from 'routers/NavigationService'
+import {QR_CODE_SCREEN} from 'libraries/utils/screenNames'
 
 import R from 'res/R'
 
@@ -129,7 +132,6 @@ export default class AddBookScreen extends Component {
             front_image, back_image,
             category_id,
         }
-        console.log(data, 'ADADADADADADACACA')
 
         if (book_name.length == 0) {
             Toast.show('Tên sách không được để trống')
@@ -151,20 +153,25 @@ export default class AddBookScreen extends Component {
             return
         }
 
+        showLoading()
         const formData = new FormData()
         Object.keys(data).map(value => {
             formData.append(value, data[value])
         })
 
-        console.log(formData, 'FORMMMMM')
-
         apis.postWithFormData(API_ENDING.REQUEST_CONTRIBUTE, formData, apis.IS_AUTH.YES)
-        .then(res => {
-            console.log(res)
-        })
-        .catch(err => {
-            console.log(err)
-        })
+            .then(res => {
+                hideLoading()
+                if (res && res.ok === Status.OK) {
+                    NavigationService.navigate(QR_CODE_SCREEN, { data: res.data })
+                } else {
+                    console.log(res)
+                }
+            })
+            .catch(err => {
+                hideLoading()
+                console.log(err)
+            })
     }
 }
 
