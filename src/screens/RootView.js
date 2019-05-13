@@ -16,6 +16,7 @@ class RootView extends Component {
         super(props);
         OneSignal.init("b6156a27-6e04-4cc2-b354-8aeb99da4210");
 
+        OneSignal.inFocusDisplaying(2)
         OneSignal.addEventListener('received', this.onReceived);
         OneSignal.addEventListener('opened', this.onOpened);
         OneSignal.addEventListener('ids', this.onIds);

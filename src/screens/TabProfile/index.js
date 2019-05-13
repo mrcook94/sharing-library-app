@@ -47,6 +47,7 @@ class ProfileScreen extends Component {
             <View style={styles.container}>
                 <ProfileHeader
                     headerTitle={R.strings.headerTitle.profile}
+                    iconAdd={true}
                 />
                 <View style={styles.profileContainer}>
                     {isLoadingProfile ? <LoadingComponent /> :

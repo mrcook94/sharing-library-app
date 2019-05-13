@@ -10,7 +10,7 @@ import R from "res/R";
 
 export default class ProfileHeader extends PureComponent {
     render() {
-        const { onPressBackButton, iconBack, headerTitle, iconHome, onPressHomeButton } = this.props;
+        const { onPressBackButton, iconBack, headerTitle, iconHome, onPressHomeButton, iconAdd, onPressAddBook } = this.props;
         return (
             <View style={styles.container}>
                 <View style={styles.headerContent}>
@@ -37,7 +37,15 @@ export default class ProfileHeader extends PureComponent {
                                     color={R.colors.primaryWhiteColor}
                                 />
                             </TouchableOpacity>) : (<View style={styles.buttonStyle} />)
+                    }
 
+                    {
+                        (iconAdd) ? (
+                            <BasicImageButton
+                                onPress={onPressAddBook}
+                                imageSource={R.images.icon_app.ic_add}
+                                imageStyle={styles.iconStyle}
+                            />) : (<View style={styles.buttonStyle} />)
                     }
                 </View>
             </View>

@@ -25,9 +25,19 @@ export default class CustomTextInput extends Component {
                     placeholderTextColor={R.colors.primaryPlaceholderTextColor}
                     ref={input => { this.textInput = input }}
                     maxLength={this.props.maxLength}
+                    returnKeyType={this.props.returnKeyType}
+                    onSubmitEditing={this.props.onSubmitEditing}
                 />
             </View>
         )
+    }
+
+    onFocusTextInput = () => {
+        this.textInput.focus()
+    }
+
+    onBlurTextInput = () => {
+        this.textInput.blur()
     }
 }
 

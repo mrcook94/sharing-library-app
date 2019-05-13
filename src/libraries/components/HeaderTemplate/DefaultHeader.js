@@ -11,8 +11,39 @@ const headerHeight = 55;
 export const HEADER_HEIGHT = pixelRatio <= 2 ? headerHeight - 8 : headerHeight
 
 export default class DefaultHeader extends PureComponent {
+
+    renderRightButton = () => {
+        const { iconHome, onPressHomeButton, iconAdd, onPressAddBook } = this.props
+        if (iconHome) {
+            return (
+                <TouchableOpacity
+                    style={styles.buttonStyle}
+                    onPress={onPressHomeButton}
+                >
+                    <Icon
+                        name={'home'}
+                        size={R.size.iconSize.iconButton}
+                        color={R.colors.primaryWhiteColor}
+                    />
+                </TouchableOpacity>
+            )
+        }
+        if (iconAdd) {
+            return (
+                <BasicImageButton
+                    onPress={onPressAddBook}
+                    imageSource={R.images.icon_app.ic_add}
+                    imageStyle={styles.iconStyle}
+                />
+            )
+        }
+        return (
+            <View style={styles.buttonStyle} />
+        )
+    }
+
     render() {
-        const { onPressBackButton, iconBack, headerTitle, iconHome, onPressHomeButton } = this.props;
+        const { onPressBackButton, iconBack, headerTitle } = this.props;
         return (
             <View style={styles.container}>
                 <View style={styles.headerContent}>
@@ -27,20 +58,7 @@ export default class DefaultHeader extends PureComponent {
 
                     <Text style={styles.titleContentStyle}>{headerTitle}</Text>
 
-                    {
-                        (iconHome) ?
-                            (<TouchableOpacity
-                                style={styles.buttonStyle}
-                                onPress={onPressHomeButton}
-                            >
-                                <Icon
-                                    name={'home'}
-                                    size={R.size.iconSize.iconButton}
-                                    color={R.colors.primaryWhiteColor}
-                                />
-                            </TouchableOpacity>) : (<View style={styles.buttonStyle} />)
-
-                    }
+                    {this.renderRightButton()}
                 </View>
             </View>
         );
@@ -52,7 +70,10 @@ DefaultHeader.defaultProps = {
         NavigationService.pop()
     },
     onPressHomeButton: () => {
-        NavigationService.reset(screenNames.APP_TAB)
+        NavigationService.navigate(screenNames.APP_TAB)
+    },
+    onPressAddBook: () => {
+        NavigationService.navigate(screenNames.ADD_BOOK_SCREEN)
     }
 }
 

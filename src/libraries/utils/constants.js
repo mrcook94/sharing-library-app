@@ -11,6 +11,12 @@ const constants = {
         pending: 0,
     },
 
+    MEMBER_RANK: {
+        BRONZE: 0,
+        SILVER: 1,
+        GOLD: 2,
+    },
+
     REQUEST_TYPE: {
         BORROW: 1,
         CONTRIBUTE: 2,

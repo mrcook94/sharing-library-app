@@ -24,6 +24,7 @@ class HomeScreen extends Component {
 			<View style={styles.container}>
 				<DefaultHeader
 					headerTitle={R.strings.headerTitle.home}
+					iconAdd= {true}
 				/>
 				<ScrollView showsVerticalScrollIndicator={false}>
 					<View style={{ flex: 1 }}>

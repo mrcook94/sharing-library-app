@@ -9,6 +9,7 @@ const strings = {
         notification: 'Thông báo',
         book_detail: 'Chi tiết sách',
         book_category: 'Danh mục sách',
+        add_book: 'Thêm mới sách',
         book_all: 'Tất cả sách',
         qr_code: 'Quét mã QR',
         request_tab: {
@@ -37,6 +38,11 @@ const strings = {
     book_status: {
         available: 'Có thể mượn',
         unavailable: 'Không thể mượn',
+    },
+    member_rank: {
+        bronze: 'Đồng',
+        silver: 'Bạc',
+        gold: 'Vàng',
     }
 }
 export default strings;

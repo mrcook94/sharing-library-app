@@ -35,6 +35,9 @@ export default class LoginScreen extends Component {
                             onChangeText={this.onChangeText('phone_number')}
                             keyboardType={'phone-pad'}
                             maxLength={10}
+                            returnKeyType='next'
+                            onSubmitEditing = {this.onSubmitPhone}
+                            ref={refs => { this.phoneInput = refs }}
                         />
 
                         <CustomTextInput
@@ -42,6 +45,9 @@ export default class LoginScreen extends Component {
                             iconName='lock'
                             onChangeText={this.onChangeText('password')}
                             secureTextEntry={true}
+                            returnKeyType='send'
+                            ref={input => { this.passInput = input }}
+                            onSubmitEditing={this.onSubmitPass}
                         />
                     </View>
 
@@ -71,6 +77,15 @@ export default class LoginScreen extends Component {
     onChangeText = type => text => {
         this.setState({ [type]: text });
     };
+
+    onSubmitPhone = () => {
+        this.phoneInput.onBlurTextInput()
+        this.passInput.onFocusTextInput()
+    }
+
+    onSubmitPass = () => {
+        this.onClickLogin()
+    }
 
     onClickLogin = () => {
         const { phone_number, password } = this.state

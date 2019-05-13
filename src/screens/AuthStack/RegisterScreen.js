@@ -36,6 +36,9 @@ export default class RegisterScreen extends Component {
 							placeholder={'Họ và tên'}
 							iconName={'user'}
 							onChangeText={this.onChangeText('full_name')}
+							returnKeyType='next'
+                            onSubmitEditing = {this.onSubmitName}
+                            ref={refs => { this.nameInput = refs }}
 						/>
 
 						<CustomTextInput
@@ -44,6 +47,9 @@ export default class RegisterScreen extends Component {
 							onChangeText={this.onChangeText('phone_number')}
 							keyboardType={'phone-pad'}
 							maxLength={10}
+							returnKeyType='next'
+                            onSubmitEditing = {this.onSubmitPhone}
+                            ref={refs => { this.phoneInput = refs }}
 						/>
 
 						<CustomTextInput
@@ -51,6 +57,9 @@ export default class RegisterScreen extends Component {
 							iconName='lock'
 							onChangeText={this.onChangeText('password')}
 							secureTextEntry={true}
+							returnKeyType='send'
+                            onSubmitEditing = {this.onSubmitPass}
+                            ref={refs => { this.passInput = refs }}
 						/>
 					</View>
 					<LinearGradientButton
@@ -79,6 +88,20 @@ export default class RegisterScreen extends Component {
 	onChangeText = type => text => {
 		this.setState({ [type]: text });
 	};
+
+	onSubmitName = () => {
+		this.nameInput.onBlurTextInput()
+		this.phoneInput.onFocusTextInput()
+	}
+
+	onSubmitPhone = () => {
+		this.phoneInput.onBlurTextInput()
+		this.passInput.onFocusTextInput()
+	}
+
+	onSubmitPass = () => {
+		this.onClickRegister()
+	}
 
 	onClickRegister = () => {
 		const { phone_number, password, full_name } = this.state
