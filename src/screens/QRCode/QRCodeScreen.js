@@ -23,7 +23,7 @@ export default class QRCodeScreen extends Component {
                     overflow={'hidden'}
                 >
                     <QRCode
-                        value={data.request_id}
+                        value={JSON.stringify(data)}
                         size={200}
                         bgColor={R.colors.primaryBlackColor}
                         fgColor='white'
