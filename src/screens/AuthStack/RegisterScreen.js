@@ -5,6 +5,7 @@ import NavigationService from 'routers/NavigationService';
 import { LOGIN_SCREEN, APP_TAB } from 'libraries/utils/screenNames'
 import Database from 'libraries/utils/database'
 import Validate from 'libraries/utils/utils'
+import { oneSignalSendTag } from 'libraries/utils/utils'
 import Toast from 'react-native-simple-toast';
 import apis from 'libraries/networking/apis'
 import { API_ENDING } from 'libraries/networking/apiEnding'
@@ -12,7 +13,6 @@ import { Status } from 'libraries/networking/status'
 import CustomTextInput from './auth_components/CustomTextInput'
 import { BasicTextButton, LinearGradientButton } from 'libraries/components/ButtonTemplate/BasicButton'
 import { pixelRatio } from 'screens/RootView'
-import DismissKeyboard from 'libraries/components/DismissKeyboard'
 import LogoComponent from './auth_components/LogoComponent'
 import { hideLoading, showLoading } from 'libraries/components/Loading/LoadingModal'
 
@@ -28,7 +28,10 @@ export default class RegisterScreen extends Component {
 	}
 	render() {
 		return (
-			<ScrollView showsVerticalScrollIndicator={false}>
+			<ScrollView
+				showsVerticalScrollIndicator={false}
+				keyboardDismissMode='on-drag'
+			>
 				<View style={styles.container}>
 					<LogoComponent />
 					<View style={styles.groupInputStyle}>
@@ -37,8 +40,8 @@ export default class RegisterScreen extends Component {
 							iconName={'user'}
 							onChangeText={this.onChangeText('full_name')}
 							returnKeyType='next'
-                            onSubmitEditing = {this.onSubmitName}
-                            ref={refs => { this.nameInput = refs }}
+							onSubmitEditing={this.onSubmitName}
+							ref={refs => { this.nameInput = refs }}
 						/>
 
 						<CustomTextInput
@@ -48,8 +51,8 @@ export default class RegisterScreen extends Component {
 							keyboardType={'phone-pad'}
 							maxLength={10}
 							returnKeyType='next'
-                            onSubmitEditing = {this.onSubmitPhone}
-                            ref={refs => { this.phoneInput = refs }}
+							onSubmitEditing={this.onSubmitPhone}
+							ref={refs => { this.phoneInput = refs }}
 						/>
 
 						<CustomTextInput
@@ -58,8 +61,8 @@ export default class RegisterScreen extends Component {
 							onChangeText={this.onChangeText('password')}
 							secureTextEntry={true}
 							returnKeyType='send'
-                            onSubmitEditing = {this.onSubmitPass}
-                            ref={refs => { this.passInput = refs }}
+							onSubmitEditing={this.onSubmitPass}
+							ref={refs => { this.passInput = refs }}
 						/>
 					</View>
 					<LinearGradientButton
@@ -133,6 +136,7 @@ export default class RegisterScreen extends Component {
 				apis.post(API_ENDING.REGISTER, data, apis.IS_AUTH.NO)
 					.then((res) => {
 						if (res && res.ok === Status.OK) {
+							oneSignalSendTag(res.data.info._id)
 							Database.save(Database.KEY.TOKEN, res.data.token)
 							Database.setUserToken(res.data.token)
 							NavigationService.reset(APP_TAB)

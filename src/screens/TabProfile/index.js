@@ -11,6 +11,7 @@ import Icon from 'react-native-vector-icons/FontAwesome5'
 import { pixelRatio, platfromOS } from 'screens/RootView'
 import { connect } from 'react-redux'
 import LoadingComponent from 'libraries/components/Loading/LoadingComponent'
+import { oneSignalSendTag } from 'libraries/utils/utils'
 import { loadProfileAction } from '../../redux/actions/profileActions'
 import BasicIcon from 'libraries/components/IconTemplate/BasicIcon'
 
@@ -100,6 +101,7 @@ class ProfileScreen extends Component {
     }
 
     onClickLogout = () => {
+        oneSignalSendTag('')
         Database.removeItem(Database.KEY.TOKEN)
         NavigationService.reset(AUTH_STACK)
     }
