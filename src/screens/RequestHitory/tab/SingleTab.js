@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Text, View, StyleSheet, FlatList } from 'react-native'
+import { Text, View, StyleSheet, FlatList, TouchableOpacity } from 'react-native'
 import { REQUEST_BORROW_BOOK, REQUEST_CONTRIBUTE_BOOK } from 'libraries/utils/screenNames'
 import apis from 'libraries/networking/apis'
 import { API_ENDING } from 'libraries/networking/apiEnding'
@@ -7,6 +7,7 @@ import { Status } from 'libraries/networking/status'
 import LoadingComponent from 'libraries/components/Loading/LoadingComponent'
 import ListNoDataComponent from 'libraries/components/ListNoDataComponent'
 import constants from 'libraries/utils/constants'
+import moment from 'moment'
 
 import R from 'res/R'
 
@@ -21,10 +22,12 @@ export default class SingleTab extends Component {
 
     renderNoData = () => {
         return (
-            <ListNoDataComponent
-                imageNoData={R.images.default_image.img_none_data}
-                textNodata={R.strings.noDataContent.request}
-            />
+            this.state.isLoading ? null : (
+                <ListNoDataComponent
+                    imageNoData={R.images.default_image.img_none_data}
+                    textNodata={R.strings.noDataContent.request}
+                />
+            )
         )
     }
 
@@ -34,11 +37,29 @@ export default class SingleTab extends Component {
         )
     }
 
-    renderRequestItem = ({item}) => {
+    renderRequestItem = ({ item }) => {
+        const ts = item.created_at
+        const dateString = moment(ts).format('L');
+
+        console.log(dateString, 'DATEEEEEEEEEEEEEEEE')
+        let itemTitle
+        switch (item.request_type) {
+            case constants.REQUEST_TYPE.BORROW:
+                itemTitle = 'Yêu cầu mượn sách'
+                break;
+
+            case constants.REQUEST_TYPE.CONTRIBUTE:
+                itemTitle = 'Yêu cầu đóng góp sách'
+                break;
+            default: break;
+        }
         return (
-            <View>
-                <Text></Text>
-            </View>
+            <TouchableOpacity style={styles.itemContainer}>
+                <Text>{itemTitle}</Text>
+                <Text>Tên sách:</Text>
+                <Text>Thời gian gửi:</Text>
+                <Text>Trạng thái:</Text>
+            </TouchableOpacity>
         )
     }
 
@@ -61,6 +82,8 @@ export default class SingleTab extends Component {
             </View>
         )
     }
+
+    keyExtractor = (item, index) => (item.id || item.key || index).toString()
 
     componentDidMount() {
         this._willFocus = this.props.navigation.addListener('willFocus', () => {
@@ -124,10 +147,21 @@ export default class SingleTab extends Component {
         apis.fetch(API_ENDING.REQUEST, requestParams, apis.IS_AUTH.YES)
             .then(res => {
                 console.log(res, 'requestDAta')
-                this.setState({
-                    isLoading: false,
-                    isLoadMore: false,
-                })
+                if (res && res.ok == Status.OK) {
+                    this.setState(prev => {
+                        return {
+                            isLoading: false,
+                            isLoadMore: false,
+                            listRequestData: [...prev.listRequestData, ...res.data]
+                        }
+                    })
+                } else {
+                    this.setState({
+                        isLoading: false,
+                        isLoadMore: false,
+                    })
+                }
+
             })
             .catch(err => {
                 console.log(err, 'ERORR')
@@ -141,6 +175,17 @@ export default class SingleTab extends Component {
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1
+        flex: 1,
+        backgroundColor: R.colors.primaryGrayColor,
+    },
+    flatListStyle: {
+        flex: 1,
+        marginBottom: 10,
+    },
+    itemContainer: {
+        paddingHorizontal: 15,
+        paddingVertical: 10,
+        backgroundColor: R.colors.primaryWhiteColor,
+        marginTop: 10,
     }
 })

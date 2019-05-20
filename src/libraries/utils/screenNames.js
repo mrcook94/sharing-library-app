@@ -27,3 +27,9 @@ export const ADD_BOOK_SCREEN = 'AddBookScreen'
 export const QR_CODE_SCREEN = 'QRCodeScreen'
 export const REQUEST_BORROW_BOOK = 'RequestBorrowBookScreen'
 export const REQUEST_CONTRIBUTE_BOOK = 'RequestContributeBookScreen'
+
+//Book online
+export const ONLINE_BOOK_TAB = 'OnlineBookTab'
+export const ONLINE_BOOK_SCREEN = 'OnlineBookScreen'
+export const ISBN_SCANNER= 'ISBNScanner'
+export const PREVIEW_ONLINE_BOOK_SCREEN = 'PreviewOnlineBookScreen'
