@@ -12,6 +12,7 @@ const images = {
         ic_minus: require('res/images/icon/ic_minus.png'),
         ic_arrow_right: require('res/images/icon/ic_arrow_right.png'),
         ic_edit: require('res/images/icon/ic_edit.png'),
+        ic_search: require('res/images/icon/ic_search.png'),
     },
     profile: {
         ic_profile: require('res/images/icon/profile/ic_detail_profile.png'),

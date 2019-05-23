@@ -19,6 +19,10 @@ export function oneSignalSendTag (user_id) {
     OneSignal.sendTag('user_id', user_id);
 }
 
+export function formatTimestampToDate (ts) {
+
+}
+
 function regexName(name) {
     let message
     let validated = true
