@@ -5,6 +5,7 @@ const images = {
         img_avatar: require('res/images/default_image/default_avatar.png'),
         img_no_request: require('res/images/default_image/img_no_request.png'),
         img_none_data: require('res/images/default_image/img_none_data.png'),
+        img_no_image: require('res/images/default_image/no_image.png'),
     },
     icon_app: {
         ic_back: require('res/images/icon/ic_back.png'),

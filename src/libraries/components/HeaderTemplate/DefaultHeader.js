@@ -13,15 +13,15 @@ export const HEADER_HEIGHT = pixelRatio <= 2 ? headerHeight - 8 : headerHeight
 export default class DefaultHeader extends PureComponent {
 
     renderRightButton = () => {
-        const { iconHome, onPressHomeButton, iconAdd, onPressAddBook } = this.props
-        if (iconHome) {
+        const { iconScan, onPressScanButton, iconAdd, onPressAddBook } = this.props
+        if (iconScan) {
             return (
                 <TouchableOpacity
                     style={styles.buttonStyle}
-                    onPress={onPressHomeButton}
+                    onPress={onPressScanButton}
                 >
                     <Icon
-                        name={'home'}
+                        name={'barcode'}
                         size={R.size.iconSize.iconButton}
                         color={R.colors.primaryWhiteColor}
                     />
@@ -69,8 +69,8 @@ DefaultHeader.defaultProps = {
     onPressBackButton: () => {
         NavigationService.pop()
     },
-    onPressHomeButton: () => {
-        NavigationService.navigate(screenNames.APP_TAB)
+    onPressScanButton: () => {
+        NavigationService.navigate(screenNames.ISBN_SCANNER)
     },
     onPressAddBook: () => {
         NavigationService.navigate(screenNames.ADD_BOOK_SCREEN)

@@ -16,7 +16,10 @@ const strings = {
             main_tab: 'Lịch sử yêu cầu',
             borrow: 'Mượn sách',
             contribute: 'Đóng góp sách'
-        }
+        },
+        online_book: 'Sách online',
+        isbn_scanner: 'Quét Barcode',
+        read_online: 'Đọc online'
     },
 
     profileItemID: {

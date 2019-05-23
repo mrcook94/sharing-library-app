@@ -44,6 +44,19 @@ class ProfileScreen extends Component {
 
     render() {
         const { userProfile, isLoadingProfile, userListMenu } = this.props
+        let user_rank
+        switch (userProfile.rank) {
+            case 0:
+                user_rank = 'Đồng'
+                break;
+            case 1:
+                user_rank = 'Bạc'
+                break;
+            case 2:
+                user_rank = 'Vàng'
+                break;
+            default: break
+        }
         return (
             <View style={styles.container}>
                 <ProfileHeader
@@ -62,7 +75,7 @@ class ProfileScreen extends Component {
                                 <Text style={styles.nameTextStyle}>{userProfile.name}</Text>
                                 <View style={styles.pointView}>
                                     <BasicIcon iconSource={R.images.profile.ic_ranking} />
-                                    <Text style={styles.pointTextStyle}>Thành viên {userProfile.rank}</Text>
+                                    <Text style={styles.pointTextStyle}>Thành viên cấp {user_rank}</Text>
                                 </View>
                             </View>
                             <FlatList

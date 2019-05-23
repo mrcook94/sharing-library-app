@@ -25,7 +25,7 @@ export default class ProfileHeader extends PureComponent {
 
                     <Text style={styles.titleContentStyle}>{headerTitle}</Text>
 
-                    {
+                    {/* {
                         (iconHome) ?
                             (<TouchableOpacity
                                 style={styles.buttonStyle}
@@ -37,7 +37,7 @@ export default class ProfileHeader extends PureComponent {
                                     color={R.colors.primaryWhiteColor}
                                 />
                             </TouchableOpacity>) : (<View style={styles.buttonStyle} />)
-                    }
+                    } */}
 
                     {
                         (iconAdd) ? (
@@ -59,6 +59,9 @@ ProfileHeader.defaultProps = {
     },
     onPressHomeButton: () => {
         NavigationService.reset(screenNames.APP_TAB)
+    },
+    onPressAddBook: () => {
+        NavigationService.navigate(screenNames.ADD_BOOK_SCREEN)
     }
 }
 
