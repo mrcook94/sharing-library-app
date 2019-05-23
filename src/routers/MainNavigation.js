@@ -13,6 +13,10 @@ import AllBookScreen from 'screens/Book/AllBookScreen'
 import AddBookScreen from 'screens/AddBookScreen'
 import QRCodeScreen from 'screens/QRCode'
 import RequestHistoryScreen from 'screens/RequestHitory'
+import OnlineBookScreen from 'screens/TabOnlineBook'
+import ISBNScanner from 'screens/TabOnlineBook/ISBNScanner'
+import PreviewOnlineBookScreen from 'screens/TabOnlineBook/PreviewOnlineBookScreen'
+import ReadOnlineScreen from 'screens/TabOnlineBook/ReadOnlineScreen'
 
 import * as screenNames from 'libraries/utils/screenNames'
 import R from 'res/R'
@@ -29,8 +33,9 @@ const authStack = createStackNavigator({
 
 const MainTab = createBottomTabNavigator({
     [screenNames.HOME_SCREEN]: HomeScreen,
-    [screenNames.PROFILE_SCREEN]: ProfileScreen,
+    [screenNames.ONLINE_BOOK_SCREEN]: OnlineBookScreen,
     [screenNames.NOTIFICATION_SCREEN]: NotificationScreen,
+    [screenNames.PROFILE_SCREEN]: ProfileScreen,
 },
     {
         tabBarOptions: {
@@ -55,6 +60,9 @@ const mainStack = createStackNavigator({
     [screenNames.ADD_BOOK_SCREEN]: AddBookScreen,
     [screenNames.QR_CODE_SCREEN]: QRCodeScreen,
     [screenNames.REQUEST_HISTORY_SCREEN]: RequestHistoryScreen,
+    [screenNames.ISBN_SCANNER]: ISBNScanner,
+    [screenNames.READ_ONLINE_SCREEN]: ReadOnlineScreen,
+    [screenNames.PREVIEW_ONLINE_BOOK_SCREEN]: PreviewOnlineBookScreen,
 },
     {
         headerMode: 'none'

@@ -3,7 +3,7 @@ import { Text, View, StyleSheet, ScrollView } from 'react-native'
 import FastImage from 'react-native-fast-image'
 import DefaultHeader from 'libraries/components/HeaderTemplate/DefaultHeader'
 import { URL_IMAGE } from 'libraries/utils/imageUrl'
-import { height, width } from 'screens/RootView'
+import { height, width, platfromOS } from 'screens/RootView'
 import constants from 'libraries/utils/constants'
 import { BasicTextButton } from 'libraries/components/ButtonTemplate/BasicButton'
 import Toast from 'react-native-simple-toast'
@@ -72,7 +72,7 @@ export default class DetailBookScreen extends Component {
                 book_id: book_data._id
             }
         }
-        apis.post(API_ENDING.REQUEST, data, apis.IS_AUTH.YES)
+        apis.post(API_ENDING.REQUEST_BORROW, data, apis.IS_AUTH.YES)
             .then(res => {
                 if (res && res.ok === Status.OK) {
                     hideLoading()
@@ -124,7 +124,7 @@ const styles = StyleSheet.create({
     },
     buttonStyle: {
         width,
-        height: R.size.buttonSize.basic,
+        paddingVertical: platfromOS == 'android' ? 10 : 15,
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: R.colors.primaryColor,

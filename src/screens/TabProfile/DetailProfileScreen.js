@@ -32,6 +32,19 @@ class DetailProfileScreen extends Component {
     render() {
         const { userProfile } = this.props
         const { name, phone, address, isEditing } = this.state
+        let user_rank
+        switch (userProfile.rank) {
+            case 0:
+                user_rank = 'Đồng'
+                break;
+            case 1:
+                user_rank = 'Bạc'
+                break;
+            case 2:
+                user_rank = 'Vàng'
+                break;
+            default: break
+        }
         return (
             <DismissKeyboard>
                 <View style={styles.container}>
@@ -78,7 +91,7 @@ class DetailProfileScreen extends Component {
                                 />
                                 <CustomTextInput
                                     iconSource={R.images.profile.ic_ranking}
-                                    textInputValue={`Thành viên ${userProfile.rank}`}
+                                    textInputValue={`Thành viên cấp ${user_rank}`}
                                     editable={false}
                                 />
                                 <CustomTextInput
@@ -157,7 +170,6 @@ class DetailProfileScreen extends Component {
         const { userProfile, updateProfileAction } = this.props
         const data = { name, phone, address }
         let validated_data = {}
-        console.log(data, 'ADADADADADADACACA')
 
         if (phone.length == 0) {
             Toast.show('Số điện thoại không được để trống')

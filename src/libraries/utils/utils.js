@@ -4,6 +4,7 @@ import R from 'res/R';
 import moment from 'moment';
 import 'moment/locale/vi';
 import Toast from 'react-native-simple-toast'
+import OneSignal from 'react-native-onesignal';
 
 function hideKeyboard() {
     Keyboard.dismiss()
@@ -14,8 +15,12 @@ function formatStringToDate(strTime, format) {
     return moment(strTime).format(format);
 }
 
-export function oneSignalSendTag(user_id) {
+export function oneSignalSendTag (user_id) {
     OneSignal.sendTag('user_id', user_id);
+}
+
+export function formatTimestampToDate (ts) {
+
 }
 
 function regexName(name) {

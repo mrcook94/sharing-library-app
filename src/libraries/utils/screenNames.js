@@ -11,6 +11,7 @@ export const APP_TAB = 'AppTab'
 export const HOME_SCREEN = 'HomeScreen'
 export const PROFILE_SCREEN = 'ProfileScreen'
 export const NOTIFICATION_SCREEN = 'NotificationScreen'
+export const ONLINE_BOOK_SCREEN = 'OnlineBookScreen'
 
 //Book
 export const BOOK_BY_CATEGORY_SCREEN = 'BookByCategoryScreen'
@@ -27,3 +28,8 @@ export const ADD_BOOK_SCREEN = 'AddBookScreen'
 export const QR_CODE_SCREEN = 'QRCodeScreen'
 export const REQUEST_BORROW_BOOK = 'RequestBorrowBookScreen'
 export const REQUEST_CONTRIBUTE_BOOK = 'RequestContributeBookScreen'
+
+//Book online
+export const ISBN_SCANNER= 'ISBNScanner'
+export const PREVIEW_ONLINE_BOOK_SCREEN = 'PreviewOnlineBookScreen'
+export const READ_ONLINE_SCREEN = 'ReadOnlineScreen'

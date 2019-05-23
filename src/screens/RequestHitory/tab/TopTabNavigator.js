@@ -25,6 +25,7 @@ const requestTopTab = createMaterialTopTabNavigator(
     {
         swipeEnabled: true,
         lazy: true,
+        bounces: true,
         tabBarOptions: {
             scrollEnabled: true,
             showIcon: false,

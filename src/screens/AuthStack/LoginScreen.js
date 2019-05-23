@@ -8,6 +8,7 @@ import { API_ENDING } from 'libraries/networking/apiEnding'
 import { Status } from 'libraries/networking/status'
 import Database from 'libraries/utils/database'
 import Validate from 'libraries/utils/utils'
+import { oneSignalSendTag } from 'libraries/utils/utils'
 import Toast from 'react-native-simple-toast';
 import CustomTextInput from './auth_components/CustomTextInput'
 import { BasicTextButton, LinearGradientButton } from 'libraries/components/ButtonTemplate/BasicButton'
@@ -35,6 +36,9 @@ export default class LoginScreen extends Component {
                             onChangeText={this.onChangeText('phone_number')}
                             keyboardType={'phone-pad'}
                             maxLength={10}
+                            returnKeyType='next'
+                            onSubmitEditing={this.onSubmitPhone}
+                            ref={refs => { this.phoneInput = refs }}
                         />
 
                         <CustomTextInput
@@ -42,6 +46,9 @@ export default class LoginScreen extends Component {
                             iconName='lock'
                             onChangeText={this.onChangeText('password')}
                             secureTextEntry={true}
+                            returnKeyType='send'
+                            ref={input => { this.passInput = input }}
+                            onSubmitEditing={this.onSubmitPass}
                         />
                     </View>
 
@@ -72,6 +79,15 @@ export default class LoginScreen extends Component {
         this.setState({ [type]: text });
     };
 
+    onSubmitPhone = () => {
+        this.phoneInput.onBlurTextInput()
+        this.passInput.onFocusTextInput()
+    }
+
+    onSubmitPass = () => {
+        this.onClickLogin()
+    }
+
     onClickLogin = () => {
         const { phone_number, password } = this.state
 
@@ -95,6 +111,7 @@ export default class LoginScreen extends Component {
             apis.post(API_ENDING.LOGIN, data, apis.IS_AUTH.NO)
                 .then((res) => {
                     if (res && res.ok === Status.OK) {
+                        oneSignalSendTag(res.data.info._id)
                         Database.save(Database.KEY.TOKEN, res.data.token)
                         Database.setUserToken(res.data.token)
                         NavigationService.reset(APP_TAB)

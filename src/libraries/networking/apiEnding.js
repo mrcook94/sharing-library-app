@@ -5,4 +5,6 @@ export const API_ENDING = {
     CATEGORY: './category',
     BOOK: '/books',
     REQUEST: '/requests',
+    REQUEST_BORROW: '/request_borrow',
+    REQUEST_CONTRIBUTE: '/request_contribute',
 }

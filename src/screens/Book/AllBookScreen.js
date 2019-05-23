@@ -19,7 +19,7 @@ class AllBookScreen extends Component {
         isLoading: true,
         isLoadMore: false,
         page: 1,
-        per_page: 6,
+        per_page: 20,
     }
 
     renderListBook = ({ item }) => {

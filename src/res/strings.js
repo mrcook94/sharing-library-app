@@ -9,13 +9,17 @@ const strings = {
         notification: 'Thông báo',
         book_detail: 'Chi tiết sách',
         book_category: 'Danh mục sách',
+        add_book: 'Thêm mới sách',
         book_all: 'Tất cả sách',
         qr_code: 'Quét mã QR',
         request_tab: {
             main_tab: 'Lịch sử yêu cầu',
             borrow: 'Mượn sách',
             contribute: 'Đóng góp sách'
-        }
+        },
+        online_book: 'Sách online',
+        isbn_scanner: 'Quét Barcode',
+        read_online: 'Đọc online'
     },
 
     profileItemID: {
@@ -37,6 +41,11 @@ const strings = {
     book_status: {
         available: 'Có thể mượn',
         unavailable: 'Không thể mượn',
+    },
+    member_rank: {
+        bronze: 'Đồng',
+        silver: 'Bạc',
+        gold: 'Vàng',
     }
 }
 export default strings;
