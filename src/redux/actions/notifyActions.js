@@ -99,10 +99,10 @@ function readNotify() {
     }
 }
 
-export function readNotifyAction(notifyId) {
+export function readNotifyAction(data) {
     return (dispatch) => {
-        const url = `${API_ENDING.NOTIFICATIONS}/${notifyId}`
-        apis.put(url, null, apis.IS_AUTH.YES)
+        const url = `${API_ENDING.NOTIFICATIONS}`
+        apis.put(url, data, apis.IS_AUTH.YES)
             .then(res => {
                 if (res && res.ok === Status.OK) {
                     dispatch(readNotify())

@@ -40,8 +40,11 @@ class NotificationItem extends Component {
     }
 
     onClickNotify(notify) {
+        const data = {
+            onesignal_id: notify.onesignal_id,
+        }
         if (notify.status === constants.NOTIFY_STATUS.UNREAD) {
-            this.props.readNotifyAction(notify.onesignal_id)
+            this.props.readNotifyAction(data)
         }
         switch (notify.data.type) {
             case constants.NOTIFY_TYPE.REQUEST:

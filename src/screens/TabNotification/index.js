@@ -55,7 +55,6 @@ class NotificationScreen extends Component {
     }
 
     render() {
-        console.log(this.props.listNotification, 'XCDC')
         return (
             <View style={styles.container}>
                 <DefaultHeader

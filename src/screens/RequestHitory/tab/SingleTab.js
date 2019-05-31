@@ -1,13 +1,14 @@
 import React, { Component } from 'react'
 import { Text, View, StyleSheet, FlatList, TouchableOpacity } from 'react-native'
-import { REQUEST_BORROW_BOOK, REQUEST_CONTRIBUTE_BOOK } from 'libraries/utils/screenNames'
+import { REQUEST_BORROW_BOOK, REQUEST_CONTRIBUTE_BOOK, QR_CODE_SCREEN } from 'libraries/utils/screenNames'
 import apis from 'libraries/networking/apis'
 import { API_ENDING } from 'libraries/networking/apiEnding'
 import { Status } from 'libraries/networking/status'
 import LoadingComponent from 'libraries/components/Loading/LoadingComponent'
 import ListNoDataComponent from 'libraries/components/ListNoDataComponent'
 import constants from 'libraries/utils/constants'
-import moment from 'moment'
+import { formatTimestampToDate } from 'libraries/utils/utils'
+import NavigationService from 'routers/NavigationService'
 
 import R from 'res/R'
 
@@ -38,11 +39,9 @@ export default class SingleTab extends Component {
     }
 
     renderRequestItem = ({ item }) => {
-        const ts = item.created_at
-        const dateString = moment(ts).format('L');
-
-        console.log(dateString, 'DATEEEEEEEEEEEEEEEE')
         let itemTitle
+        let requestStatus
+        const timestamp = ~~(item.created_at / 1000)
         switch (item.request_type) {
             case constants.REQUEST_TYPE.BORROW:
                 itemTitle = 'Yêu cầu mượn sách'
@@ -53,12 +52,28 @@ export default class SingleTab extends Component {
                 break;
             default: break;
         }
+
+        switch (item.status) {
+            case constants.REQUEST_STATUS.PENDING:
+                requestStatus = 'Đang chờ xử lý'
+                break;
+
+            case constants.REQUEST_STATUS.ACCEPTED:
+                requestStatus = 'Đã xác nhận'
+                break;
+
+            case constants.REQUEST_STATUS.FINISHED:
+                requestStatus = 'Đã hoàn thành'
+                break;
+
+            default: break;
+        }
         return (
-            <TouchableOpacity style={styles.itemContainer}>
-                <Text>{itemTitle}</Text>
-                <Text>Tên sách:</Text>
-                <Text>Thời gian gửi:</Text>
-                <Text>Trạng thái:</Text>
+            <TouchableOpacity style={styles.itemContainer} onPress={this.onPressRequestItem({ item })}>
+                <Text style={styles.titleTextStyle}>{itemTitle}</Text>
+                <Text style={styles.defaultTextStyle}>Tên sách:   <Text style={styles.contentTextStyle}>{item.data.book_name}</Text></Text>
+                <Text style={styles.defaultTextStyle}>Thời gian gửi:   <Text style={styles.contentTextStyle}>{formatTimestampToDate(timestamp)}</Text></Text>
+                <Text style={styles.defaultTextStyle}>Trạng thái:   <Text style={styles.contentTextStyle}>{requestStatus}</Text> </Text>
             </TouchableOpacity>
         )
     }
@@ -102,6 +117,17 @@ export default class SingleTab extends Component {
         this._willFocus.remove();
     }
 
+    onPressRequestItem = ({ item }) => () => {
+        const data = { request_id: item._id }
+        switch (item.status) {
+            case constants.REQUEST_STATUS.PENDING:
+                NavigationService.navigate(QR_CODE_SCREEN, { data })
+                break;
+
+            default: break;
+        }
+    }
+
     onRefreshListRequest = () => {
         this.setState({
             page: 1,
@@ -112,13 +138,13 @@ export default class SingleTab extends Component {
 
     onLoadMoreRequest = () => {
         const { page, per_page, listRequestData } = this.state
-        if (listRequestData.length !== 0 || page * per_page > listRequestData.length) {
+        if (listRequestData.length == 0 || page * per_page > listRequestData.length) {
             return
         }
         this.setState(prev => {
             return {
+                page: prev.page + 1,
                 isLoadMore: true,
-                page: prev.page + 1
             }
         }, () => this.loadRequestData())
     }
@@ -143,10 +169,8 @@ export default class SingleTab extends Component {
             page: this.state.page,
             per_page: this.state.per_page,
         }
-
         apis.fetch(API_ENDING.REQUEST, requestParams, apis.IS_AUTH.YES)
             .then(res => {
-                console.log(res, 'requestDAta')
                 if (res && res.ok == Status.OK) {
                     this.setState(prev => {
                         return {
@@ -187,5 +211,20 @@ const styles = StyleSheet.create({
         paddingVertical: 10,
         backgroundColor: R.colors.primaryWhiteColor,
         marginTop: 10,
+    },
+    defaultTextStyle: {
+        marginTop: 10,
+        fontSize: R.size.textSize.subTitle,
+        fontWeight: '500',
+    },
+    contentTextStyle: {
+        fontWeight: 'normal',
+        fontSize: R.size.textSize.content,
+    },
+    titleTextStyle: {
+        fontSize: R.size.textSize.title,
+        fontWeight: '500',
+        textAlign: 'center',
+        marginBottom: 10
     }
 })

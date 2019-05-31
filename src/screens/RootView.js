@@ -46,13 +46,13 @@ class RootView extends Component {
         this.props.loadingNotificationAction(data)
     }
 
-    onOpened(openResult) {
+    onOpened = (openResult) => {
         console.log('Message: ', openResult.notification.payload.body);
         console.log('Data: ', openResult.notification.payload.additionalData);
         console.log('isActive: ', openResult.notification.isAppInFocus);
         console.log('openResult: ', openResult);
         const { type, data } = openResult.notification.payload.additionalData
-
+        this.props.readNotifyAction({ onesignal_id: openResult.notification.payload.notificationID })
         switch (type) {
             case constants.NOTIFY_TYPE.REQUEST:
                 NavigationService.navigate(REQUEST_HISTORY_SCREEN, { item: data })
