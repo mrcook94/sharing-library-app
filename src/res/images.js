@@ -6,6 +6,7 @@ const images = {
         img_no_request: require('res/images/default_image/img_no_request.png'),
         img_none_data: require('res/images/default_image/img_none_data.png'),
         img_no_image: require('res/images/default_image/no_image.png'),
+        img_no_image: require('res/images/default_image/img_no_notify.png'),
     },
     icon_app: {
         ic_back: require('res/images/icon/ic_back.png'),
@@ -14,6 +15,9 @@ const images = {
         ic_arrow_right: require('res/images/icon/ic_arrow_right.png'),
         ic_edit: require('res/images/icon/ic_edit.png'),
         ic_search: require('res/images/icon/ic_search.png'),
+        ic_check: require('res/images/icon/ic_check.png'),
+        ic_notify: require('res/images/icon/ic_notify.png'),
+        ic_notification: require('res/images/icon/ic_notification.png'),
     },
     profile: {
         ic_profile: require('res/images/icon/profile/ic_detail_profile.png'),

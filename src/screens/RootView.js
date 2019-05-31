@@ -2,6 +2,12 @@ import React, { Component } from 'react';
 import { StyleSheet, StatusBar, SafeAreaView, Dimensions, PixelRatio, Platform } from 'react-native';
 import NoInternetScreen from 'screens/NoInternetScreen'
 import OneSignal from 'react-native-onesignal';
+import { loadingNotificationAction, readNotifyAction } from '../redux/actions/notifyActions'
+import NavigationService from 'routers/NavigationService'
+import constants from 'libraries/utils/constants'
+import { REQUEST_HISTORY_SCREEN, DETAIL_PROFILE_SCREEN } from 'libraries/utils/screenNames'
+
+import { connect } from 'react-redux'
 
 export const HEADER_HEIGHT = 55
 export const { height, width } = Dimensions.get('screen')
@@ -28,8 +34,16 @@ class RootView extends Component {
         OneSignal.removeEventListener('ids', this.onIds);
     }
 
-    onReceived(notification) {
+    onReceived = (notification) => {
         console.log("Notification received: ", notification);
+        this.receivedNotifyAction()
+    }
+    receivedNotifyAction = () => {
+        const data = {
+            page: 1,
+            per_page: 10,
+        }
+        this.props.loadingNotificationAction(data)
     }
 
     onOpened(openResult) {
@@ -37,6 +51,25 @@ class RootView extends Component {
         console.log('Data: ', openResult.notification.payload.additionalData);
         console.log('isActive: ', openResult.notification.isAppInFocus);
         console.log('openResult: ', openResult);
+        const { type, data } = openResult.notification.payload.additionalData
+
+        switch (type) {
+            case constants.NOTIFY_TYPE.REQUEST:
+                NavigationService.navigate(REQUEST_HISTORY_SCREEN, { item: data })
+                break;
+            case constants.NOTIFY_TYPE.REMIND:
+
+                break;
+            case constants.NOTIFY_TYPE.POINT:
+                NavigationService.navigate(DETAIL_PROFILE_SCREEN)
+                break;
+
+            case constants.NOTIFY_TYPE.RANK_CHANGE:
+                NavigationService.navigate(DETAIL_PROFILE_SCREEN)
+                break;
+
+            default: break;
+        }
     }
 
     onIds(device) {
@@ -63,4 +96,7 @@ const styles = StyleSheet.create({
     }
 })
 
-export default RootView;
+export default connect(null, {
+    loadingNotificationAction,
+    readNotifyAction,
+})(RootView);

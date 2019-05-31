@@ -37,6 +37,7 @@ const strings = {
     noDataContent: {
         book: 'Hiện chưa có sách này',
         request: 'Chưa có yêu cầu nào',
+        notification: 'Hiện chưa có thông báo nào'
     },
     book_status: {
         available: 'Có thể mượn',

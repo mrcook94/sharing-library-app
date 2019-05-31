@@ -7,4 +7,5 @@ export const API_ENDING = {
     REQUEST: '/requests',
     REQUEST_BORROW: '/request_borrow',
     REQUEST_CONTRIBUTE: '/request_contribute',
+    NOTIFICATIONS: '/notifications',
 }

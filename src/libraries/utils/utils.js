@@ -15,12 +15,26 @@ function formatStringToDate(strTime, format) {
     return moment(strTime).format(format);
 }
 
-export function oneSignalSendTag (user_id) {
+export function oneSignalSendTag(user_id) {
     OneSignal.sendTag('user_id', user_id);
 }
 
-export function formatTimestampToDate (ts) {
+export function formatTimestampToDate(ts) {
+    const current_time = moment(new Date()).unix()
+    const differ_time = current_time - ts
+    let converted_time
 
+    if (differ_time < 60) {
+        converted_time = `${differ_time} giây trước`
+    } else if (differ_time >= 60 && differ_time < 3600) {
+        converted_time = `${~~(differ_time / 60)} phút trước`
+    } else if (differ_time >= 3600 && differ_time < 86400) {
+        converted_time = `${~~(differ_time / 3600)} giờ trước`
+    } else if (differ_time >= 86400) {
+        converted_time = `${~~(differ_time / 86400)} ngày trước`
+    }
+
+    return converted_time
 }
 
 function regexName(name) {

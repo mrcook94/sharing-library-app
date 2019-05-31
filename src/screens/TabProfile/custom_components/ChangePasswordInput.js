@@ -23,7 +23,6 @@ export default class ChangePasswordInput extends Component {
 
 const styles = StyleSheet.create({
     textinputTitle: {
-        fontFamily: R.fonts.content,
         fontSize: R.size.textSize.subTitle,
         color: R.colors.primaryBlackColor,
     },
