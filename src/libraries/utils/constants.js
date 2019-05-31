@@ -30,6 +30,18 @@ const constants = {
         REJECTED: 3,
         FINISHED: 4,
     },
+
+    NOTIFY_TYPE: {
+        REQUEST: 1,
+        REMIND: 2,
+        POINT: 3,
+        RANK_CHANGE: 4,
+    },
+
+    NOTIFY_STATUS: {
+        READ: 1,
+        UNREAD: 0,
+    },
 }
 
 export default constants;

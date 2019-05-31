@@ -13,7 +13,7 @@ export const HEADER_HEIGHT = pixelRatio <= 2 ? headerHeight - 8 : headerHeight
 export default class DefaultHeader extends PureComponent {
 
     renderRightButton = () => {
-        const { iconScan, onPressScanButton, iconAdd, onPressAddBook } = this.props
+        const { iconScan, onPressScanButton, iconAdd, onPressAddBook, iconCheck, oPressCheckNotification } = this.props
         if (iconScan) {
             return (
                 <TouchableOpacity
@@ -33,6 +33,15 @@ export default class DefaultHeader extends PureComponent {
                 <BasicImageButton
                     onPress={onPressAddBook}
                     imageSource={R.images.icon_app.ic_add}
+                    imageStyle={styles.iconStyle}
+                />
+            )
+        }
+        if (iconCheck) {
+            return (
+                <BasicImageButton
+                    onPress={oPressCheckNotification}
+                    imageSource={R.images.icon_app.ic_check}
                     imageStyle={styles.iconStyle}
                 />
             )

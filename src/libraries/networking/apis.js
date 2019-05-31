@@ -99,6 +99,22 @@ function putWithFormData(url, data, isAuth) {
     })
 }
 
+function del(url, isAuth) {
+    let headers = null
+    if (isAuth) {
+        headers = {
+            Authorization: Database.getUserToken(),
+        }
+    }
+    return instance.delete(url, {
+        headers
+    }).then(response => {
+        return response.data
+    }).catch(error => {
+        return error;
+    })
+}
+
 export default apis = {
     fetch,
     post,
@@ -106,4 +122,5 @@ export default apis = {
     putWithFormData,
     IS_AUTH,
     put,
+    del,
 }
