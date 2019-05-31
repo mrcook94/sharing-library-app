@@ -11,10 +11,17 @@ import { Status } from 'libraries/networking/status'
 import { API_ENDING } from 'libraries/networking/apiEnding'
 import NavigationService from 'routers/NavigationService'
 import Toast from 'react-native-simple-toast'
+import AlertModal from 'libraries/components/Modal/AlertModal'
 
 import R from 'res/R'
 
 export default class QRCodeScreen extends Component {
+    constructor(props) {
+        super(props)
+        this.state = {
+            isModalVisible: false,
+        }
+    }
     render() {
         const data = this.props.navigation.getParam('data', '')
         return (
@@ -41,25 +48,47 @@ export default class QRCodeScreen extends Component {
                     textStyle={styles.textButtonStyle}
                     onPress={this.onPressCancelRequest}
                 />
+                <AlertModal
+                    isModalVisible={this.state.isModalVisible}
+                    onCloseModal={this.onCloseModal}
+                    onPressActionOk={this.confirmModal}
+                    confirmText='Đồng ý'
+                    abortText='Huỷ'
+                    modalTitle='Xác nhận'
+                    modalContents='Bạn muốn huỷ yêu cầu này?'
+                />
             </View>
         )
     }
+
     onPressCancelRequest = () => {
+        this.setState({ isModalVisible: true })
+    }
+
+    onCloseModal = () => {
+        this.setState({ isModalVisible: false })
+    }
+
+    confirmModal = () => {
+        this.setState({ isModalVisible: false }, () => this.cancelRequestApi())
+    }
+
+    cancelRequestApi = () => {
         const data = this.props.navigation.getParam('data', '')
         const url = `${API_ENDING.REQUEST}/${data.request_id}`
         apis.del(url, apis.IS_AUTH.YES)
-        .then(res => {
-            if (res && res.ok == Status.OK) {
-                Toast.show('Đã huỷ yêu cầu')
-                NavigationService.pop()
-            } else {
+            .then(res => {
+                if (res && res.ok == Status.OK) {
+                    Toast.show('Đã huỷ yêu cầu')
+                    NavigationService.pop()
+                } else {
+                    Toast.show('Có lỗi xảy ra')
+                }
+            })
+            .catch(err => {
                 Toast.show('Có lỗi xảy ra')
-            }
-        })
-        .catch(err => {
-            Toast.show('Có lỗi xảy ra')
-            console.log(err, 'ERRR')
-        })
+                console.log(err, 'ERRR')
+            })
     }
 }
 
