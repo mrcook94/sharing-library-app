@@ -65,6 +65,10 @@ class GroupBookHome extends Component {
     keyExtractor = (item, index) => (item.id || item.key || index).toString()
 
     componentDidMount() {
+        this.onLoadData()
+    }
+
+    onLoadData = () => {
         apis.fetch(API_ENDING.BOOK, null, apis.IS_AUTH.YES)
             .then(res => {
                 if (res && res.ok === Status.OK) {

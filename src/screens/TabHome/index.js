@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Text, View, StyleSheet, ScrollView } from 'react-native'
+import { Text, View, StyleSheet, ScrollView, RefreshControl } from 'react-native'
 import Icon from 'react-native-vector-icons/Ionicons'
 import DefaultHeader from 'libraries/components/HeaderTemplate/DefaultHeader'
 import GroupCategory from './GroupCategory'
@@ -25,12 +25,19 @@ class HomeScreen extends Component {
 			<View style={styles.container}>
 				<DefaultHeader
 					headerTitle={R.strings.headerTitle.home}
-					iconAdd= {true}
+					iconAdd={true}
 				/>
-				<ScrollView showsVerticalScrollIndicator={false}>
+				<ScrollView
+					showsVerticalScrollIndicator={false}
+					refreshControl={
+						<RefreshControl
+							onRefresh={this.onRefreshHomeScreen}
+							refreshing={this.props.isLoadingProfile}
+						/>}
+				>
 					<View style={{ flex: 1 }}>
-						<GroupCategory />
-						<GroupBookHome />
+						<GroupCategory ref={refs => { this.groupCategory = refs }} />
+						<GroupBookHome ref={refs => { this.groupBookHome = refs }} />
 					</View>
 				</ScrollView>
 
@@ -40,19 +47,34 @@ class HomeScreen extends Component {
 
 	componentDidMount() {
 		const data = {
-            page: 1,
-            per_page: 8,
-        }
+			page: 1,
+			per_page: 8,
+		}
 		this.props.loadProfile()
 		this.props.loadingNotificationAction(data)
 	}
 
+	onRefreshHomeScreen = () => {
+		const data = {
+			page: 1,
+			per_page: 8,
+		}
+		this.props.loadProfile()
+		this.props.loadingNotificationAction(data)
+		this.groupBookHome.onLoadData()
+		this.groupCategory.onLoadData()
+	}
+
 }
 
-export default connect(null, {
-	loadProfile: loadProfileAction,
-	loadingNotificationAction,
-})(HomeScreen)
+export default connect(state => {
+	return {
+		isLoadingProfile: state.profileReducer.isLoadingProfile
+	}
+}, {
+		loadProfile: loadProfileAction,
+		loadingNotificationAction,
+	})(HomeScreen)
 
 const styles = StyleSheet.create({
 	container: {

@@ -52,6 +52,10 @@ class GroupCategory extends Component {
     }
 
     componentDidMount() {
+        this.onLoadData()
+    }
+
+    onLoadData = () => {
         const data = {
             limit: 6
         }
