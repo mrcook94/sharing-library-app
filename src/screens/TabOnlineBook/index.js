@@ -30,7 +30,8 @@ export default class OnlineBookScreen extends Component {
         maxResults: 20,
         search_key: '',
         listBookData: [],
-        isSearch: false
+        isSearch: false,
+        totalItem: 0,
     }
 
     renderListBook = ({ item }) => {
@@ -92,6 +93,8 @@ export default class OnlineBookScreen extends Component {
                         ListEmptyComponent={this.renderNoData}
                         style={styles.flatListStyle}
                         refreshing={this.state.isLoading}
+                        onEndReachedThreshold={0.2}
+                        onEndReached={this.onLoadMoreResult}
                     />
                 )}
             </View>
@@ -103,6 +106,25 @@ export default class OnlineBookScreen extends Component {
     };
 
     onSubmitSearch = () => {
+        this.setState({
+            page: 1,
+            listBookData: [],
+        }, () => this.onLoadResult())
+    }
+
+    onLoadMoreResult = () => {
+        const { page, listBookData, maxResults } = this.state
+        if (listBookData.length == 0 || page * maxResults > listBookData.length) {
+            return
+        }
+        this.setState(prev => {
+            return {
+                page: prev.page + 1
+            }
+        }, () => this.onLoadResult())
+    }
+
+    onLoadResult = () => {
         showLoading()
         const { search_key, page, maxResults } = this.state
         const startIndex = (page - 1) * maxResults
@@ -116,9 +138,13 @@ export default class OnlineBookScreen extends Component {
             .then(res => {
                 hideLoading()
                 console.log(res, 'ACACAC')
-                this.setState({
-                    listBookData: res.items,
-                    isSearch: true,
+                this.setState(prev => {
+                    return {
+                        listBookData: [...prev.listBookData, ...res.items],
+                        isSearch: true,
+                    }
+                }, () => {
+                    console.log(this.state.listBookData, 'BVVVVVVV')
                 })
             })
             .catch(err => {
