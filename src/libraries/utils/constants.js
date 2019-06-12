@@ -36,6 +36,8 @@ const constants = {
         REMIND: 2,
         POINT: 3,
         RANK_CHANGE: 4,
+        CONFIRM_REQUEST: 5,
+        RETURN_BOOK: 6,
     },
 
     NOTIFY_STATUS: {

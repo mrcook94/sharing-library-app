@@ -6,12 +6,8 @@ import { API_ENDING } from 'libraries/networking/apiEnding'
 import { Status } from 'libraries/networking/status'
 import LoadingComponent from 'libraries/components/Loading/LoadingComponent'
 import ListNoDataComponent from 'libraries/components/ListNoDataComponent'
-import FastImage from 'react-native-fast-image'
-import { URL_IMAGE } from 'libraries/utils/imageUrl'
-
+import BookItem from 'libraries/components/BookItem'
 import R from 'res/R'
-import NavigationService from 'routers/NavigationService';
-import { DETAIL_BOOK_SCREEN } from 'libraries/utils/screenNames'
 
 class AllBookScreen extends Component {
     state = {
@@ -24,27 +20,7 @@ class AllBookScreen extends Component {
 
     renderListBook = ({ item }) => {
         return (
-            <TouchableOpacity
-                style={styles.bookItemStyle}
-                onPress={this.onPressDetailBook({item})}
-            >
-                <FastImage
-                    source={{ uri: URL_IMAGE.urlBookImage(item.front_image) }}
-                    resizeMode={FastImage.resizeMode.contain}
-                    style={styles.bookImageStyle}
-                />
-                <View style={styles.bookContent}>
-                    <Text style={styles.bookName}>{item.name}</Text>
-                    <Text>Tác giả: {item.author}</Text>
-                    <Text
-                        style={styles.bookDescription}
-                        numberOfLines={2}
-                        ellipsizeMode={'tail'}
-                    >
-                        {item.description}
-                    </Text>
-                </View>
-            </TouchableOpacity>
+            <BookItem item={item} />
         )
     }
 
@@ -147,10 +123,6 @@ class AllBookScreen extends Component {
                 })
                 console.log(err, 'ERROR')
             })
-    }
-
-    onPressDetailBook = ({item}) => () => {
-        NavigationService.navigate(DETAIL_BOOK_SCREEN, {book_data: item})
     }
 
     keyExtractor = (item, index) => (item.id || item.key || index).toString()

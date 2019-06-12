@@ -1,15 +1,14 @@
 import React, { Component } from 'react'
-import { Text, View, StyleSheet, FlatList, TouchableOpacity } from 'react-native'
-import FastImage from 'react-native-fast-image'
+import { Text, View, StyleSheet, FlatList } from 'react-native'
 import apis from 'libraries/networking/apis'
 import { API_ENDING } from 'libraries/networking/apiEnding'
 import { Status } from 'libraries/networking/status'
 import LoadingComponent from 'libraries/components/Loading/LoadingComponent'
 import NavigationService from 'routers/NavigationService'
-import { DETAIL_BOOK_SCREEN, ALL_BOOK_SCREEN } from 'libraries/utils/screenNames'
-import { URL_IMAGE } from 'libraries/utils/imageUrl'
+import { ALL_BOOK_SCREEN } from 'libraries/utils/screenNames'
 import ListNoDataComponent from 'libraries/components/ListNoDataComponent'
 import { BasicTextButton } from 'libraries/components/ButtonTemplate/BasicButton'
+import BookItem from 'libraries/components/BookItem'
 import { width } from 'screens/RootView'
 
 import R from 'res/R'
@@ -22,27 +21,7 @@ class GroupBookHome extends Component {
 
     renderListHomeBook = ({ item }) => {
         return (
-            <TouchableOpacity
-                style={styles.bookItemStyle}
-                onPress={this.onPressDetailBook({ item })}
-            >
-                <FastImage
-                    source={{ uri: URL_IMAGE.urlBookImage(item.front_image) }}
-                    resizeMode={FastImage.resizeMode.contain}
-                    style={styles.bookImageStyle}
-                />
-                <View style={styles.bookContent}>
-                    <Text style={styles.bookName}>{item.name}</Text>
-                    <Text>Tác giả: {item.author}</Text>
-                    <Text
-                        style={styles.bookDescription}
-                        numberOfLines={2}
-                        ellipsizeMode={'tail'}
-                    >
-                        {item.description}
-                    </Text>
-                </View>
-            </TouchableOpacity>
+            <BookItem item={item} />
         )
     }
 
@@ -107,10 +86,6 @@ class GroupBookHome extends Component {
                 })
                 console.log(err, 'ERROR')
             })
-    }
-
-    onPressDetailBook = ({ item }) => () => {
-        NavigationService.navigate(DETAIL_BOOK_SCREEN, { book_data: item })
     }
 
     onPressSeeMoreBook = () => {

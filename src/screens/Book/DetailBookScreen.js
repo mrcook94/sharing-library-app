@@ -69,7 +69,8 @@ export default class DetailBookScreen extends Component {
         const data = {
             request_type: constants.REQUEST_TYPE.BORROW,
             data: {
-                book_id: book_data._id
+                book_id: book_data._id,
+                book_name: book_data.name,
             }
         }
         apis.post(API_ENDING.REQUEST_BORROW, data, apis.IS_AUTH.YES)

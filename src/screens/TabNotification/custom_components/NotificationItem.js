@@ -51,7 +51,7 @@ class NotificationItem extends Component {
                 NavigationService.navigate(REQUEST_HISTORY_SCREEN, { item: notify.data.data })
                 break;
             case constants.NOTIFY_TYPE.REMIND:
-                
+
                 break;
             case constants.NOTIFY_TYPE.POINT:
                 NavigationService.navigate(DETAIL_PROFILE_SCREEN)
@@ -61,6 +61,13 @@ class NotificationItem extends Component {
                 NavigationService.navigate(DETAIL_PROFILE_SCREEN)
                 break;
 
+            case constants.NOTIFY_TYPE.CONFIRM_REQUEST:
+                NavigationService.navigate(REQUEST_HISTORY_SCREEN, { item: notify.data.data })
+                break;
+
+            case constants.NOTIFY_TYPE.RETURN_BOOK:
+                NavigationService.navigate(REQUEST_HISTORY_SCREEN, { item: notify.data.data })
+                break;
             default: break;
         }
     }

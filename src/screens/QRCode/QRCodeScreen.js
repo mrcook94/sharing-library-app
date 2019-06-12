@@ -12,6 +12,7 @@ import { API_ENDING } from 'libraries/networking/apiEnding'
 import NavigationService from 'routers/NavigationService'
 import Toast from 'react-native-simple-toast'
 import AlertModal from 'libraries/components/Modal/AlertModal'
+import { APP_TAB } from 'libraries/utils/screenNames'
 
 import R from 'res/R'
 
@@ -29,6 +30,7 @@ export default class QRCodeScreen extends Component {
                 <DefaultHeader
                     headerTitle={R.strings.headerTitle.qr_code}
                     iconBack={true}
+                    onPressBackButton={this.onPressBackButton}
                 />
                 <Text style={styles.textStyle}>Quét mã này để xác nhận yêu cầu</Text>
                 <View
@@ -80,7 +82,7 @@ export default class QRCodeScreen extends Component {
             .then(res => {
                 if (res && res.ok == Status.OK) {
                     Toast.show('Đã huỷ yêu cầu')
-                    NavigationService.pop()
+                    NavigationService.reset(APP_TAB)
                 } else {
                     Toast.show('Có lỗi xảy ra')
                 }
@@ -89,6 +91,10 @@ export default class QRCodeScreen extends Component {
                 Toast.show('Có lỗi xảy ra')
                 console.log(err, 'ERRR')
             })
+    }
+
+    onPressBackButton = () => {
+        NavigationService.reset(APP_TAB)
     }
 }
 

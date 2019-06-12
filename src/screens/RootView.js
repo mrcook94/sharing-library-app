@@ -5,7 +5,7 @@ import OneSignal from 'react-native-onesignal';
 import { loadingNotificationAction, readNotifyAction } from '../redux/actions/notifyActions'
 import NavigationService from 'routers/NavigationService'
 import constants from 'libraries/utils/constants'
-import { REQUEST_HISTORY_SCREEN, DETAIL_PROFILE_SCREEN } from 'libraries/utils/screenNames'
+import { REQUEST_HISTORY_SCREEN, DETAIL_PROFILE_SCREEN, APP_TAB } from 'libraries/utils/screenNames'
 
 import { connect } from 'react-redux'
 
@@ -36,6 +36,10 @@ class RootView extends Component {
 
     onReceived = (notification) => {
         console.log("Notification received: ", notification);
+        const { type } = notification.payload.additionalData
+        if (type == constants.NOTIFY_TYPE.CONFIRM_REQUEST || type == constants.NOTIFY_TYPE.RETURN_BOOK) {
+            NavigationService.reset(APP_TAB)
+        }
         this.receivedNotifyAction()
     }
     receivedNotifyAction = () => {
@@ -68,6 +72,13 @@ class RootView extends Component {
                 NavigationService.navigate(DETAIL_PROFILE_SCREEN)
                 break;
 
+            case constants.NOTIFY_TYPE.CONFIRM_REQUEST:
+                NavigationService.navigate(REQUEST_HISTORY_SCREEN, { item: data })
+                break;
+
+            case constants.NOTIFY_TYPE.RETURN_BOOK:
+                NavigationService.navigate(REQUEST_HISTORY_SCREEN, { item: data })
+                break;
             default: break;
         }
     }
