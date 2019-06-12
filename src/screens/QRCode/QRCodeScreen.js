@@ -1,7 +1,7 @@
 'use strict';
 
 import React, { Component } from 'react'
-import { Text, View, StyleSheet } from 'react-native'
+import { Text, View, StyleSheet, BackHandler } from 'react-native'
 import DefaultHeader from 'libraries/components/HeaderTemplate/DefaultHeader'
 import QRCode from 'react-native-qrcode';
 import { BasicTextButton } from 'libraries/components/ButtonTemplate/BasicButton'
@@ -63,6 +63,10 @@ export default class QRCodeScreen extends Component {
         )
     }
 
+    componentDidMount() {
+        this.backHandler = BackHandler.addEventListener('hardwareBackPress', this.onPressBackButton);
+      }
+
     onPressCancelRequest = () => {
         this.setState({ isModalVisible: true })
     }
@@ -95,7 +99,12 @@ export default class QRCodeScreen extends Component {
 
     onPressBackButton = () => {
         NavigationService.reset(APP_TAB)
+        return true
     }
+
+    componentWillUnmount() {
+        this.backHandler.remove()
+      }
 }
 
 const styles = StyleSheet.create({
